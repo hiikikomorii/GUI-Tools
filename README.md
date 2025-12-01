@@ -21,7 +21,7 @@
 ![numberwork.png](assets/numberwork.png)
 
 **2. ``Lat/Lon`` - функция, с помощью которой вы можете узнать информацию о координатах по долготе(_lat_) и широте(_lon_).  
-Использует [openstreetmap API](https://nominatim.openstreetmap.org) и выводит более 18 строк с информацией**
+Использует [openstreetmap API](https://nominatim.openstreetmap.org) и выводит более 16 строк с информацией**
 
 ![latwork.png](assets/latwork.png)
 
@@ -146,6 +146,7 @@
 ``py boot_loader.py`` или python ``boot_loader.py``**  
 **P.S. ``Boot_loader`` нужен лишь когда вы впервые запускаете эту сборку, если boot loader запустил ``HidlowToolsGUI``
 ``без ошибок``, то можете запускать HidlowToolsGUI ``напрямую`` и в случае ошибки на стороне модулей, вас перекинет в это меню**
+
 
 
 
