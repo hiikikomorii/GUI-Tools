@@ -5,7 +5,10 @@ import threading
 import os
 import platform
 import ctypes
+from datetime import date, datetime
 root = tk.Tk()
+time1 = datetime.now().strftime("%H:%M:%S")
+data1 = date.today()
 
 try:
     import customtkinter
@@ -24,7 +27,7 @@ try:
 
     hidlow_path = "HidlowToolsGUI.py"
     subprocess.Popen(
-        ["cmd", "/c", sys.executable, str(hidlow_path)],
+        ["cmd", "/k", sys.executable, str(hidlow_path)],
         creationflags=subprocess.CREATE_NEW_CONSOLE
     )
 
@@ -49,10 +52,13 @@ except ModuleNotFoundError as e:
 
 
     text = ("""
-Boottraped-GUI\n
-Если вы попали сюда - значит у вас не установлен модуль который показывается на экране\n
-нажмите кнопку 'Install' для того, чтобы установить этот модуль\n
-Затем нажмите 'Reboot' для того, чтобы попытаться запустить HidlowToolsGUI
+Boottraped-menu\n
+Скрипту не удалось запуститься из-за ошибки\n
+Установите модули нажав кнопку 'Install'\n
+Обновите pip нажав кнопку 'upgrade pip'\n
+Нажав кнопку 'reboot' вы перезапускаете скрипт\n
+если ошибок не возникнет - скрипт, который
+вы пытались запустить, запустится без этого меню.
                    """)
 
 
@@ -125,9 +131,11 @@ Boottraped-GUI\n
     info_frame = tk.Frame(root, bg="blue")
     info_frame.pack(side="right", pady=20, padx=20, anchor="se")
 
+    label_time = tk.Label(info_frame, text=f"{data1} {time1}", fg="white", bg="blue", font=("bold", 12))
+    label_time.pack(pady=10)
 
     label_help = tk.Label(info_frame, text=text, fg="white", bg="blue", font=("bold", 12))
-    label_help.pack(pady=5)
+    label_help.pack(pady=10)
 
     labelinfo = tk.Label(info_frame, text=f"version: {pyver}\ncompiler: {pycomp}\nbuild: {pybuild}", fg="white", bg="blue", font=("bold", 15))
     labelinfo.pack(pady=5)
