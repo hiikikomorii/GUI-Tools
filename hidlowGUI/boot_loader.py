@@ -6,6 +6,7 @@ import os
 import platform
 import ctypes
 from datetime import date, datetime
+fullscreen = True
 root = tk.Tk()
 time1 = datetime.now().strftime("%H:%M:%S")
 data1 = date.today()
@@ -21,6 +22,7 @@ try:
     import phonenumbers
     from faker import Faker
     import pynput
+    import test_module #test
     from flask import Flask, jsonify
     from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
 
@@ -125,11 +127,91 @@ Boottraped-menu\n
         threading.Thread(target=upd_pip_cmd).start()
 
 
-    frame = tk.Frame(root, bg="blue")
-    frame.pack(padx=20, pady=20, anchor="nw")
+    def fullscreen_on():
+        global fullscreen
+        fullscreen = not fullscreen
 
+        if fullscreen:
+            root.attributes('-fullscreen', True)
+        else:
+            root.attributes('-fullscreen', False)
+            root.geometry("960x540")
+
+    bg_state = 1
+    def theme_tk():
+        global bg_state
+
+        if bg_state == 1:
+            #blacck
+            for frames in (frame, frame2, root, info_frame):
+                frames.config(bg="black")
+                for widget in frames.winfo_children():
+                    if isinstance(widget, tk.Button):
+                        widget.config(
+                            bg="#0A0A0A",
+                            activebackground="#0F0F0F",
+                            activeforeground="white"
+                        )
+                for labels in frames.winfo_children():
+                    if isinstance(labels, tk.Label):
+                        labels.config(
+                            bg="black",
+                        )
+            bg_state = 2
+        elif bg_state == 2:
+            #white
+            for frames in (frame, frame2, root, info_frame):
+                frames.config(bg="white")
+                for widget in frames.winfo_children():
+                    if isinstance(widget, tk.Button):
+                        widget.config(
+                            bg="#EBEBEB",
+                            activebackground="#C3C3C3",
+                            fg="black",
+                            activeforeground = "black"
+                        )
+                for labels in frames.winfo_children():
+                    if isinstance(labels, tk.Label):
+                        labels.config(
+                            bg="white",
+                            fg="black"
+                        )
+            bg_state = 3
+        else:
+            #blue
+            for frames in (frame, frame2, root, info_frame):
+                frames.config(bg="blue")
+                for widget in frames.winfo_children():
+                    if isinstance(widget, tk.Button):
+                        widget.config(
+                            bg="blue",
+                            activebackground="#0010A7",
+                            fg="white",
+                            activeforeground="white",
+                        )
+                for labels in frames.winfo_children():
+                    if isinstance(labels, tk.Label):
+                        labels.config(
+                            bg="blue",
+                            fg="white"
+                        )
+            bg_state = 1
+
+
+    frame = tk.Frame(root, bg="blue")
+    frame.pack(padx=20, anchor="nw")
+    frame2 = tk.Frame(root, bg="blue")
+    frame2.pack(padx=20, anchor="nw")
     info_frame = tk.Frame(root, bg="blue")
     info_frame.pack(side="right", pady=20, padx=20, anchor="se")
+
+
+    btnfullscr = tk.Button(frame2, text="Fullscreen", activebackground="#0010A7", bg="blue", fg="white", command=fullscreen_on, width=10)
+    btnfullscr.pack(side="left", padx=5, pady=5)
+
+    theme_btn = tk.Button(frame2, text="Theme", activebackground="#0010A7", bg="blue", fg="white", command=theme_tk, width=10)
+    theme_btn.pack(side="left", padx=5, pady=5)
+
 
     label_time = tk.Label(info_frame, text=f"{data1} {time1}", fg="white", bg="blue", font=("bold", 12))
     label_time.pack(pady=10)
