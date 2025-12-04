@@ -63,7 +63,7 @@
 ***
 ### Boottraper
 
-![bsod_preview_v2.png](assets/bsod_preview_v2.png)
+![bsod_preview.png](assets/bsod_preview_blue.png)
 
 **Он нужен для того, чтобы проверять установлены ли все модули или нет.**
 **При запуске проверяет все нужные для ``HidlowToolsGUI модули``. 
@@ -156,6 +156,7 @@
 **P.S. ``Boot_loader`` нужен лишь когда вы впервые запускаете эту сборку, если boot loader запустил ``HidlowToolsGUI``
 ``без ошибок``, то можете запускать HidlowToolsGUI ``напрямую`` и в случае ошибки на стороне модулей, вас перекинет в это меню.  
 Boottraper установлен для всех исполняемых файлов: ``troll``, ``hidlowAPI``, ``hidlowToolsGUI`` и ``DebugConsole``**
+
 
 
 
