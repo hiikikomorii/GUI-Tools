@@ -22,7 +22,6 @@ try:
     import phonenumbers
     from faker import Faker
     import pynput
-    import test_module #test
     from flask import Flask, jsonify
     from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
 
