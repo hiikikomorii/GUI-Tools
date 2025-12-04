@@ -120,18 +120,14 @@
 ![aboutcmd.png](assets/aboutcmd.png)
 ![aboutproj.png](assets/aboutproj.png)
 
-2. **``Theme`` - перейдя на ``GUI``, кастомизация начинает играть новыми красками**
+2. **``Theme`` - имеется следующие темы:**
 
+![bg_main_blue.png](assets/bg_main_blue.png)
 
 ![bgblack.png](assets/bgblack.png)
 
-![bgmag.png](assets/bgmag.png)
-
-![bgred.png](assets/bgred.png)
-
 ![bgwhite.png](assets/bgwhite.png)
 
-![bg_main_blue.png](assets/bg_main_blue.png)
 
 3. **``Folder`` - нажав на кнопку, вас переместит в ``текущую директорию`` с main-файлом**
 
@@ -156,6 +152,7 @@
 **P.S. ``Boot_loader`` нужен лишь когда вы впервые запускаете эту сборку, если boot loader запустил ``HidlowToolsGUI``
 ``без ошибок``, то можете запускать HidlowToolsGUI ``напрямую`` и в случае ошибки на стороне модулей, вас перекинет в это меню.  
 Boottraper установлен для всех исполняемых файлов: ``troll``, ``hidlowAPI``, ``hidlowToolsGUI`` и ``DebugConsole``**
+
 
 
 
