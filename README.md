@@ -1,6 +1,6 @@
 # Hidlow Tools GUI
 
-![bg_main_blue.png](assets/bg_main_blue.png)
+![bg_main_blue.png](assets/bgblack_2.png)
 
 ***
 [Функции](#функции)  ||  [Boottraper](#boottraper) || [Console](#console) || [Доп.Функционал](#дополнительный-функционал) || [Установка](#установка)
@@ -122,11 +122,11 @@
 
 2. **``Theme`` - имеется следующие темы:**
 
-![bg_main_blue.png](assets/bg_main_blue.png)
+![bg_main_blue.png](assets/bgblue_2.png)
 
-![bgblack.png](assets/bgblack.png)
+![bgblack.png](assets/bgblack_2.png)
 
-![bgwhite.png](assets/bgwhite.png)
+![bgwhite.png](assets/bgwhite_2.png)
 
 
 3. **``Folder`` - нажав на кнопку, вас переместит в ``текущую директорию`` с main-файлом**
@@ -152,6 +152,7 @@
 **P.S. ``Boot_loader`` нужен лишь когда вы впервые запускаете эту сборку, если boot loader запустил ``HidlowToolsGUI``
 ``без ошибок``, то можете запускать HidlowToolsGUI ``напрямую`` и в случае ошибки на стороне модулей, вас перекинет в это меню.  
 Boottraper установлен для всех исполняемых файлов: ``troll``, ``hidlowAPI``, ``hidlowToolsGUI`` и ``DebugConsole``**
+
 
 
 
