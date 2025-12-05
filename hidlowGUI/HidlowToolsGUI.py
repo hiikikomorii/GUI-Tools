@@ -984,11 +984,11 @@ bg_images = None
 reboot_buttons = None
 
 try:
-    image_paths = [f"assets/bg_assets/bg{i}.jpg" for i in range(1, 6)]
+    image_paths = [f"assets/bg_assets/bg{i}.jpg" for i in range(1, 4)]
     bg = [Image.open(path).resize((1920, 1080)) for path in image_paths]
     bg_images = [ctk.CTkImage(light_image=img, size=(1920, 1080)) for img in bg]
-    exit_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/exit_assets/exitbutton{i}.png").resize((27, 27)), size=(27, 27))for i in range(1, 6)]
-    reboot_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/reboot_assets/rebootbutton{i}.png").resize((25, 25)), size=(25, 25)) for i in range(1, 6)]
+    exit_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/exit_assets/exitbutton{i}.png").resize((27, 27)), size=(27, 27))for i in range(1, 4)]
+    reboot_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/reboot_assets/rebootbutton{i}.png").resize((25, 25)), size=(25, 25)) for i in range(1, 4)]
 
 except Exception as b:
     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка Background : {b}")
@@ -1008,23 +1008,20 @@ def change_background():
     global fullscreen
 
     if bg_state == 1:
+        # white
         bg_label.configure(image=bg_images[1])
 
         exitadapter_button.configure(image=exit_buttons[1])
         rebootbutton_button.configure(image=reboot_buttons[1])
 
-        root.configure(fg_color="#D4CECE")
-        menu_frame2.configure(fg_color="#D4D4D4")
-        settings_frame.configure(fg_color="#BDBDBD")
-        exitadapter_button.configure(fg_color="#D4D4D4", hover_color="#D4D4D4", border_color="#D4D4D4")
-        rebootbutton_button.configure(fg_color="#D4D4D4", hover_color="#D4D4D4", border_color="#D4D4D4")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg3.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
 
+        menu_frame2.configure(fg_color="#FDFDFD")
+        exitadapter_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
+        rebootbutton_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
-
-
-        for frame in (menu_frame, entry_frame, about_frame, currency_frame, faker_frame, output_label):
-            frame.configure(fg_color="#D4CECE")
+        for frame in (root, menu_frame, settings_frame, entry_frame, about_frame, currency_frame, faker_frame,output_label):
+            frame.configure(fg_color="#FDFDFD")
             for widget in frame.winfo_children():
                 try:
                     if isinstance(widget, ctk.CTkButton):
@@ -1048,7 +1045,6 @@ def change_background():
 
                 except Exception as a:
                     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
-
         bg_state = 2
 
 
@@ -1060,169 +1056,69 @@ def change_background():
         exitadapter_button.configure(image=exit_buttons[2])
         rebootbutton_button.configure(image=reboot_buttons[2])
 
-        root.configure(fg_color="#8FCCFA")
-        exitadapter_button.configure(fg_color="#95D2F7", hover_color="#95D2F7", border_color="#95D2F7")
-        rebootbutton_button.configure(fg_color="#95D2F7", hover_color="#95D2F7", border_color="#95D2F7")
+        about_btn.configure(fg_color="#000C7A", hover_color="#000538")
+        settings_button.configure(fg_color="#000C7A", hover_color="#000538")
+        exitadapter_button.configure(fg_color="#0F0BAC", hover_color="#0F0BAC", border_color="#0F0BAC")
+        rebootbutton_button.configure(fg_color="#0F0BAC", hover_color="#0F0BAC", border_color="#0F0BAC")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg3.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLUE_EX}BLUE ")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLUE_EX}BLUE ")
 
-        settings_frame.configure(fg_color="#AAD4FA")
-        entry_frame.configure(fg_color="#95C7F7")
-        menu_frame.configure(fg_color="#8FCCFA")
-        menu_frame2.configure(fg_color="#95D2F7")
-        about_frame.configure(fg_color="#89C6F5")
-        currency_frame.configure(fg_color="#9ECFF8")
-        faker_frame.configure(fg_color="#89C6F5")
-        output_label.configure(fg_color="#9ECFF8")
+        root.configure(fg_color="#0F0AB0")
+        settings_frame.configure(fg_color="#0F0BAC")
+        menu_frame2.configure(fg_color="#0F0AB0")
+
+        confirm_button.configure(text_color="#00CF00")
+        fakerback_button.configure(text_color="red")
+        currencyback_button.configure(text_color="red")
+        aboutback_button.configure(text_color="red")
+        back_button.configure(text_color="red")
+
+        for widgets_menu2 in settings_frame.winfo_children():
+            if isinstance(widgets_menu2, ctk.CTkButton):
+                widgets_menu2.configure(
+                    fg_color="#000C7A",
+                    hover_color="#000538",
+                )
 
 
         for frame in (menu_frame, entry_frame, about_frame, faker_frame, currency_frame, output_label):
+            frame.configure(fg_color="#0C09BE")
+
             for widget in frame.winfo_children():
                 try:
                     if isinstance(widget, ctk.CTkButton):
                         widget.configure(
-                            fg_color="#006597",
-                            hover_color="#003D5C",
+                            fg_color="#00A0F0",
+                            hover_color="#0088CC",
                         )
-
-                        about_btn.configure(fg_color="#003D5C", hover_color="#00689C")
-                        settings_button.configure(fg_color="#003D5C", hover_color="#00689C")
-                        btn1.configure(fg_color="#003D5C", hover_color="#00689C")
-                        btn2.configure(fg_color="#003D5C", hover_color="#00689C")
-                        btn3.configure(fg_color="#003D5C", hover_color="#00689C")
-                        btn4.configure(fg_color="#003D5C", hover_color="#00689C")
-
-                        confirm_button.configure(text_color="#00CF00")
-
-                        fakerback_button.configure(text_color="red")
-                        currencyback_button.configure(text_color="red")
-                        aboutback_button.configure(text_color="red")
-                        back_button.configure(text_color="red")
 
                 except Exception as a:
                     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
+
+
 
 
         bg_state = 3
 
-
-    elif bg_state == 3:
-        # красный
-        bg_label.configure(image=bg_images[3])
-        bg_label.image = bg_images[3]
-
-        exitadapter_button.configure(image=exit_buttons[3])
-        rebootbutton_button.configure(image=reboot_buttons[3])
-
-        root.configure(fg_color="#390100")
-        exitadapter_button.configure(fg_color="#3E0202", hover_color="#3E0202", border_color="#3E0202")
-        rebootbutton_button.configure(fg_color="#3E0202", hover_color="#3E0202", border_color="#3E0202")
-
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg4.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTRED_EX}RED")
-
-        settings_frame.configure(fg_color="#440301")
-        menu_frame.configure(fg_color="#390100")
-        menu_frame2.configure(fg_color="#3E0202")
-        entry_frame.configure(fg_color="#3C0200")
-        about_frame.configure(fg_color="#3C0200")
-        faker_frame.configure(fg_color="#3C0200")
-        currency_frame.configure(fg_color="#3C0200")
-        output_label.configure(fg_color="#3C0200")
-
-
-        for frame in (menu_frame, entry_frame, about_frame, faker_frame, currency_frame, output_label):
-            for widget in frame.winfo_children():
-                try:
-                    if isinstance(widget, ctk.CTkButton):
-                        widget.configure(
-                            fg_color="#7B0202",
-                            hover_color="#B40000",
-                        )
-                        about_btn.configure(fg_color="#840302", hover_color="#B40000")
-                        settings_button.configure(fg_color="#840302", hover_color="#B40000")
-                        btn1.configure(fg_color="#840302", hover_color="#B40000")
-                        btn2.configure(fg_color="#840302", hover_color="#B40000")
-                        btn3.configure(fg_color="#840302", hover_color="#B40000")
-                        btn4.configure(fg_color="#840302", hover_color="#B40000")
-
-                        confirm_button.configure(text_color="#00CF00")
-
-                        fakerback_button.configure(text_color="red")
-                        currencyback_button.configure(text_color="red")
-                        aboutback_button.configure(text_color="red")
-                        back_button.configure(text_color="red")
-
-                except Exception as a:
-                    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
-
-        bg_state = 4
-
-
-    elif bg_state == 4:
-        # фиолетовый
-        bg_label.configure(image=bg_images[4])
-        bg_label.image = bg_images[4]
-
-        exitadapter_button.configure(image=exit_buttons[4])
-        rebootbutton_button.configure(image=reboot_buttons[4])
-
-        root.configure(fg_color="#2C0D6B")
-        exitadapter_button.configure(fg_color="#300B74", hover_color="#300B73", border_color="#300B74")
-        rebootbutton_button.configure(fg_color="#300B74", hover_color="#300B73", border_color="#300B74")
-
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg5.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.MAGENTA}MAGENTA")
-
-        settings_frame.configure(fg_color="#311174")
-        menu_frame.configure(fg_color="#280963")
-        menu_frame2.configure(fg_color="#300B74")
-
-
-        for frame in (entry_frame, about_frame, currency_frame, faker_frame, output_label):
-            frame.configure(fg_color="#300B72")
-
-        for frame in (menu_frame, entry_frame, about_frame, faker_frame, currency_frame, output_label):
-            for widget in frame.winfo_children():
-                try:
-                    if isinstance(widget, ctk.CTkButton):
-                        widget.configure(
-                            fg_color="#540073",
-                            hover_color="#640096"
-                        )
-
-                        about_btn.configure(fg_color="#29003E", hover_color="#640096")
-                        settings_button.configure(fg_color="#29003E", hover_color="#640096")
-                        btn1.configure(fg_color="#29003E", hover_color="#640096")
-                        btn2.configure(fg_color="#29003E", hover_color="#640096")
-                        btn3.configure(fg_color="#29003E", hover_color="#640096")
-                        btn4.configure(fg_color="#29003E", hover_color="#640096")
-
-                        confirm_button.configure(text_color="#00CF00")
-
-                        fakerback_button.configure(text_color="red")
-                        currencyback_button.configure(text_color="red")
-                        aboutback_button.configure(text_color="red")
-                        back_button.configure(text_color="red")
-
-                except Exception as a:
-                    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
-
-        bg_state = 5
-
     else:
+        #black
         bg_label.configure(image=bg_images[0])
         bg_label.image = bg_images[0]
 
         exitadapter_button.configure(image=exit_buttons[0])
         rebootbutton_button.configure(image=reboot_buttons[0])
 
-        root.configure(fg_color="black")
         menu_frame2.configure(fg_color="black")
+        about_btn.configure(fg_color="#262626", hover_color="#444444")
+        settings_button.configure(fg_color="#262626", hover_color="#444444")
         exitadapter_button.configure(fg_color="black", hover_color="black", border_color="black")
         rebootbutton_button.configure(fg_color="black", hover_color="black", border_color="black")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
 
-        for frame in (menu_frame, settings_frame, entry_frame, about_frame, currency_frame, faker_frame, output_label):
+        for frame in (
+        root, menu_frame, settings_frame, entry_frame, about_frame, currency_frame, faker_frame,
+        output_label):
             frame.configure(fg_color="black")
 
             for widget in frame.winfo_children():
@@ -1235,7 +1131,6 @@ def change_background():
                         about_btn.configure(fg_color="#202020", hover_color="#444444")
                         settings_button.configure(fg_color="#202020", hover_color="#444444")
 
-
                         confirm_button.configure(text_color="#00CF00")
 
                         fakerback_button.configure(text_color="red")
@@ -1245,6 +1140,9 @@ def change_background():
 
                 except Exception as a:
                     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
+
+
+
 
         bg_state = 1
 
@@ -1309,23 +1207,22 @@ button10 = ctk.CTkButton(menu_frame, text="Notify", fg_color="#262626", text_col
 button10.pack(side="left", padx=5)
 
 
-about_btn = ctk.CTkButton(menu_frame2, text="Info", fg_color="#202020", text_color="white", hover_color="#444444", width=5, command=select_about)
+about_btn = ctk.CTkButton(menu_frame2, text="Info", fg_color="#262626", text_color="white", hover_color="#444444", width=5, command=select_about)
 about_btn.pack(side="left", padx=5)
 
-settings_button = ctk.CTkButton(menu_frame2, text="Settings", fg_color="#202020", text_color="white", hover_color="#444444", width=10, corner_radius=10, command=toggle_settings)
+settings_button = ctk.CTkButton(menu_frame2, text="Settings", fg_color="#262626", text_color="white", hover_color="#444444", width=10, corner_radius=10, command=toggle_settings)
 settings_button.pack(side="left", padx=5)
 
-btn1 = ctk.CTkButton(settings_frame, text="fullscreen", fg_color="#202020", text_color="#00CF00", hover_color="#444444", width=85, corner_radius=10, command=toggle_fullscreen)
+btn1 = ctk.CTkButton(settings_frame, text="fullscreen", fg_color="#262626", text_color="#00CF00", hover_color="#444444", width=85, corner_radius=10, command=toggle_fullscreen)
 btn1.pack(pady=2)
 
-
-btn2 = ctk.CTkButton(settings_frame, text="background", fg_color="#202020", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=change_background)
+btn2 = ctk.CTkButton(settings_frame, text="background", fg_color="#262626", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=change_background)
 btn2.pack(pady=3)
 
-btn3 = ctk.CTkButton(settings_frame, text="folder", fg_color="#202020", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=open_folder)
+btn3 = ctk.CTkButton(settings_frame, text="folder", fg_color="#262626", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=open_folder)
 btn3.pack(pady=3)
 
-btn4 = ctk.CTkButton(settings_frame, text="console", fg_color="#202020", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=consoleadapter)
+btn4 = ctk.CTkButton(settings_frame, text="console", fg_color="#262626", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=consoleadapter)
 btn4.pack(pady=3)
 
 
