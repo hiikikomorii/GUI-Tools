@@ -1,43 +1,36 @@
 import subprocess
 import sys
+import os
+import tkinter as tk
+from datetime import date, datetime
+import re
+import json
+from pathlib import Path
+import threading
+import time
+import ctypes
+import random
 
-try:
-    import os
-    import customtkinter as ctk
-    import tkinter as tk
-    import requests
-    import random
-    import time
-    from PIL import Image, ImageTk
-    from colorama import init, Fore, Style
-    import qrcode
-    import psutil, socket, platform
-    from datetime import date, datetime
-    import json
-    from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
-    import phonenumbers
-    import urllib.request
-    import re
-    from faker import Faker
-    import ctypes
-    from pynput.keyboard import Controller, Key
-    from flask import Flask, jsonify
-    from pathlib import Path
-    import threading
-    from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
-
-
-except ModuleNotFoundError as e:
-    if e.name == "files.consoledebug.pingapi_func":
-        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nпуть {e.name} не найден\nПроверьте совместимость сборки", "debug-console", 0x10)
-        sys.exit()
-
+def nomodule_boottraper():
     boot_path = "boot_loader.py"
     subprocess.Popen(
         ["cmd", "/c", sys.executable, str(boot_path)],
         creationflags=subprocess.CREATE_NEW_CONSOLE
     )
     sys.exit()
+
+try:
+    import customtkinter as ctk
+    from PIL import Image, ImageTk
+    from colorama import init, Fore, Style
+    import requests
+    from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
+
+except ModuleNotFoundError as e:
+    if e.name == "files.consoledebug.pingapi_func":
+        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nпуть {e.name} не найден\nПроверьте совместимость сборки", "debug-console", 0x10)
+        sys.exit()
+    nomodule_boottraper()
 
 
 root = ctk.CTk()
@@ -47,24 +40,13 @@ screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 time1 = datetime.now().strftime("%H:%M:%S")
 data1 = date.today()
-
-
 _orig_blue = Fore.BLUE
 _orig_lightblue_ex = Fore.LIGHTBLUE_EX
 _orig_cyan = Fore.CYAN
 _orig_lightcyan_ex = Fore.LIGHTCYAN_EX
 
-print(f"{Style.BRIGHT}{Fore.BLUE}GitHub: https://github.com/hiikikomorii")
 
-print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTCYAN_EX}Дата & время запуска: {Style.BRIGHT}{data1}, {time1}")
-
-check_path_debug = Path(r"files\consoledebug\debugconsole.py")
-if check_path_debug.exists():
-    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}CMD is available")
-else:
-    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM] {Fore.RED}CMD is not available\n" * 10)
-
-
+print(f"{Style.BRIGHT}{Fore.BLUE}GitHub: https://github.com/hiikikomorii {Fore.RESET}|{Fore.LIGHTCYAN_EX} {data1} - {time1}")
 
 # настройка gui
 root.configure(fg_color="black")
@@ -72,9 +54,13 @@ root.attributes('-fullscreen', True)
 root.after(0, lambda:root.state('zoomed'))
 root.title("HidlowTools-GUI-V2")
 
-
-#eto api
+#prepare
 def select_api1():
+    try:
+        import phonenumbers
+        import urllib.request
+    except ModuleNotFoundError:
+        nomodule_boottraper()
     prepare_input(api_number)
 
 def select_api2():
@@ -84,6 +70,11 @@ def select_api3():
     prepare_input(api_lat)
 
 def select_qrcode():
+    try:
+        import qrcode
+    except ModuleNotFoundError:
+        nomodule_boottraper()
+
     prepare_input(qrcodee)
 
 def select_gptchc():
@@ -92,8 +83,19 @@ def select_gptchc():
 def select_notify():
     prepare_input(main_notify)
 
-def select_about():
-    prepare_about()
+def select_monitor():
+    try:
+        import platform
+        import psutil
+    except ModuleNotFoundError:
+        nomodule_boottraper()
+
+    hide_settings()
+    menu_frame.pack_forget()
+    menu_frame2.pack_forget()
+    monitor_frame.pack()
+    monitorback_button.configure(command=go_back)
+    threading.Thread(target=times_label, daemon=True).start()
 
 def select_currency():
     hide_settings()
@@ -103,6 +105,10 @@ def select_currency():
     currencyback_button.configure(command=go_back)
 
 def select_faker():
+    try:
+        from faker import Faker
+    except ModuleNotFoundError:
+        nomodule_boottraper()
     hide_settings()
     menu_frame.pack_forget()
     menu_frame2.pack_forget()
@@ -110,13 +116,12 @@ def select_faker():
     fakerback_button.configure(command=go_back)
 
 #prepare about
-def prepare_about():
+def select_about():
     hide_settings()
     menu_frame.pack_forget()
     menu_frame2.pack_forget()
     about_frame.pack(pady=10)
     aboutback_button.configure(command=go_back)
-
 
 #prepare api
 def prepare_input(api_func):
@@ -126,7 +131,6 @@ def prepare_input(api_func):
     clear_entry_frame()
     entry_frame.pack(pady=10)
     confirm_button.configure(command=api_func)
-
 
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
@@ -316,7 +320,6 @@ def api_lat():
         return
 
     try:
-
         parts = user_input.split()
 
         if len(parts) != 2:
@@ -402,6 +405,10 @@ def qrcodee():
         button4.configure(text_color="#FF0000")
 
 def trol():
+    try:
+        from pynput.keyboard import Controller, Key
+    except ModuleNotFoundError:
+        nomodule_boottraper()
     try:
         print(f"{Fore.BLUE}{Style.BRIGHT}[TROLL]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Troll was opened")
         try:
@@ -572,6 +579,10 @@ def gptchc():
 #HidlowAPI
 def hidlowapi_cmd():
     try:
+        from flask import Flask, jsonify
+    except Exception:
+        nomodule_boottraper()
+    try:
         print(f"{Fore.BLUE}{Style.BRIGHT}[API Server]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Server was enabled")
         try:
             script_dir = Path(__file__).parent / "files" / "apiserver"
@@ -590,7 +601,30 @@ def hidlowapi_cmd():
         button9.configure(text_color="#FF0000")
         print(f"{Fore.BLUE}{Style.BRIGHT}[API Server]{Style.NORMAL} {Fore.RED}произошла ошибка при запуске 'HidlowAPI'\n{error_hidlowapi}")
 
-#faker backend
+#monitor backend
+def times_label():
+    while True:
+        try:
+            t = datetime.now().strftime("%H:%M:%S")
+            label_mon.configure(text=f"\r{t}")
+            print(end="", flush=True)
+            label_mon.pack()
+
+            mem = psutil.virtual_memory()
+            labelmem.configure(text=f"\rИспользовано {mem.percent}% RAM")
+            labelmem.pack()
+
+            cpu = psutil.cpu_percent(interval=0.1)
+            labelcpu.configure(text=f"\rИспользовано {cpu}% CPU")
+            labelcpu.pack()
+
+            
+        except RuntimeError:
+            return
+        time.sleep(1)
+
+
+# faker backend
 def fakerru():
     for widget in faker_frame.pack_slaves():
         if isinstance(widget, tk.Text):
@@ -762,9 +796,6 @@ def fakerjp():
 
 def show_messagebox(text, title, icon):
     ctypes.windll.user32.MessageBoxW(0, text, title, icon)
-
-
-
 def main_notify():
     notify_icons = {
         "info": 0x40,
@@ -800,21 +831,30 @@ def main_notify():
 
     except Exception as error_ctypes:
         print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.RED}error ctype\n{error_ctypes}")
+
+
 #console
 def consoleadapter():
     try:
-        print(f"{Fore.BLUE}{Style.BRIGHT}[CMD]{Style.NORMAL} {Fore.LIGHTGREEN_EX}cmd was opened")
-        script_dir = Path(__file__).parent / "files" / "consoledebug"
-        script_file = script_dir / "debugconsole.py"
-
-        subprocess.Popen(
-            ["cmd", "/k", sys.executable, str(script_file)],
-            cwd=str(script_dir),
-            creationflags=subprocess.CREATE_NEW_CONSOLE
-        )
-    except Exception as error_cmd:
+        check_path_debug = Path(r"files\consoledebug\debugconsole.py")
+        if check_path_debug.exists():
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}CMD is available")
+            script_dir = Path(__file__).parent / "files" / "consoledebug"
+            script_file = script_dir / "debugconsole.py"
+            subprocess.Popen(
+                ["cmd", "/c", sys.executable, str(script_file)],
+                cwd=str(script_dir),
+                creationflags=subprocess.CREATE_NEW_CONSOLE
+            )
+        else:
+            btn4.configure(text_color="#FF0000")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM] {Fore.RED}CMD is not available\n" * 10)
+            ctypes.windll.user32.MessageBoxW(0,f"Сборка повреждена\nКонсоль недоступна\nПроверьте совместимость сборки","debug-console", 0x10)
+    except Exception as error_prepare_console:
+        print(error_prepare_console)
         btn4.configure(text_color="#FF0000")
-        print(f"{Fore.BLUE}{Style.BRIGHT}[CMD]{Style.NORMAL} {Fore.RED}произошла ошибка при открытии cmd\n{error_cmd}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[CMD]{Style.NORMAL} {Fore.RED}произошла ошибка при открытии cmd\n{error_prepare_console}")
+        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nКонсоль недоступна\nПроверьте совместимость сборки","debug-console", 0x10)
 
 
 # about
@@ -850,11 +890,12 @@ def about_project():
     Notify - создает windows-уведомление: название окна, значок, текст
     пример: [window] [error] [text in window]
     доступные значки: info, warning, error, question\n
+    Monitor - показывает информацию о системе в реальном времени\n
     \n
     background имеет 5 задних фонов: белый, черный, синий, красный, фиолетовый\n
     fullscreen меняет размер окна из полноэкранного режима в 1280x720\n
     console - с помощью нее вы можете работать с консолью. команды в 'about console'\n\n
-    Версия: BETA BSOD upd\n"""
+    Версия: BETA monitor func update\n"""
 
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
@@ -955,7 +996,7 @@ def go_back_from_entry():
     menu_frame2.pack(pady=20)
 
 def go_back():
-    entry_frame.pack_forget()
+    monitor_frame.pack_forget()
     about_frame.pack_forget()
     currency_frame.pack_forget()
     faker_frame.pack_forget()
@@ -984,7 +1025,7 @@ bg_images = None
 reboot_buttons = None
 
 try:
-    image_paths = [f"assets/bg_assets/bg{i}.jpg" for i in range(1, 4)]
+    image_paths = [f"assets/bg_assets/bg{i}.png" for i in range(1, 4)]
     bg = [Image.open(path).resize((1920, 1080)) for path in image_paths]
     bg_images = [ctk.CTkImage(light_image=img, size=(1920, 1080)) for img in bg]
     exit_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/exit_assets/exitbutton{i}.png").resize((27, 27)), size=(27, 27))for i in range(1, 4)]
@@ -1014,13 +1055,23 @@ def change_background():
         exitadapter_button.configure(image=exit_buttons[1])
         rebootbutton_button.configure(image=reboot_buttons[1])
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg3.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
 
+        about_btn.configure(fg_color="#545454", hover_color="#444444")
+        settings_button.configure(fg_color="#545454", hover_color="#444444")
+        settings_frame.configure(fg_color="#FDFDFD")
         menu_frame2.configure(fg_color="#FDFDFD")
         exitadapter_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
         rebootbutton_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
 
-        for frame in (root, menu_frame, settings_frame, entry_frame, about_frame, currency_frame, faker_frame,output_label):
+        for widgets_menu2 in settings_frame.winfo_children():
+            if isinstance(widgets_menu2, ctk.CTkButton):
+                widgets_menu2.configure(
+                    fg_color="#545454",
+                    hover_color="#444444",
+                )
+
+        for frame in (root, menu_frame, entry_frame, about_frame, currency_frame, faker_frame,output_label):
             frame.configure(fg_color="#FDFDFD")
             for widget in frame.winfo_children():
                 try:
@@ -1029,12 +1080,6 @@ def change_background():
                             fg_color="#858585",
                             hover_color="#6E6E6E",
                         )
-                        about_btn.configure(fg_color="#545454", hover_color="#444444")
-                        settings_button.configure(fg_color="#545454", hover_color="#444444")
-                        btn1.configure(fg_color="#545454", hover_color="#444444")
-                        btn2.configure(fg_color="#545454", hover_color="#444444")
-                        btn3.configure(fg_color="#545454", hover_color="#444444")
-                        btn4.configure(fg_color="#545454", hover_color="#444444")
 
                         confirm_button.configure(text_color="#00CF00")
 
@@ -1042,6 +1087,7 @@ def change_background():
                         currencyback_button.configure(text_color="red")
                         aboutback_button.configure(text_color="red")
                         back_button.configure(text_color="red")
+
 
                 except Exception as a:
                     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
@@ -1061,7 +1107,7 @@ def change_background():
         exitadapter_button.configure(fg_color="#0F0BAC", hover_color="#0F0BAC", border_color="#0F0BAC")
         rebootbutton_button.configure(fg_color="#0F0BAC", hover_color="#0F0BAC", border_color="#0F0BAC")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLUE_EX}BLUE ")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg3.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLUE_EX}BLUE ")
 
         root.configure(fg_color="#0F0AB0")
         settings_frame.configure(fg_color="#0F0BAC")
@@ -1114,7 +1160,7 @@ def change_background():
         exitadapter_button.configure(fg_color="black", hover_color="black", border_color="black")
         rebootbutton_button.configure(fg_color="black", hover_color="black", border_color="black")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
 
         for frame in (
         root, menu_frame, settings_frame, entry_frame, about_frame, currency_frame, faker_frame,
@@ -1175,6 +1221,9 @@ currency_frame = ctk.CTkFrame(root, fg_color="black")
 #faker frame
 faker_frame = ctk.CTkFrame(root, fg_color="black")
 
+#monitor frame
+monitor_frame = ctk.CTkFrame(root, fg_color="black")
+
 # кнопки
 button1 = ctk.CTkButton(menu_frame, text="Number", fg_color="#262626", text_color="white", width=50, corner_radius=10, hover_color="#444444", command=select_api1)
 button1.pack(side="left", padx=5)
@@ -1205,6 +1254,9 @@ button9.pack(side="left", padx=5)
 
 button10 = ctk.CTkButton(menu_frame, text="Notify", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_notify)
 button10.pack(side="left", padx=5)
+
+button11 = ctk.CTkButton(menu_frame, text="Monitor", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_monitor)
+button11.pack(side="left", padx=5)
 
 
 about_btn = ctk.CTkButton(menu_frame2, text="Info", fg_color="#262626", text_color="white", hover_color="#444444", width=5, command=select_about)
@@ -1269,7 +1321,16 @@ jpbtn.pack(pady=3)
 fakerback_button = ctk.CTkButton(faker_frame, text="Back", fg_color="#262626", text_color="red", hover_color="#444444", width=8, command=go_back)
 fakerback_button.pack(pady=1)
 
+#monitor back
+monitorback_button = ctk.CTkButton(monitor_frame, text="Back", fg_color="#262626", text_color="red", hover_color="#444444", width=8, command=go_back)
+monitorback_button.pack(side="bottom", pady=1)
 
 
+#labels
 output_label = ctk.CTkLabel(root, fg_color="black", text_color="#FF0000")
+label_mon = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
+labelmem = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
+labelcpu = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
+
+
 root.mainloop()

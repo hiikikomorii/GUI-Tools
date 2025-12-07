@@ -87,7 +87,7 @@ Boottraped-menu\n
             if result.returncode == 0:
                 label_ru.config(text=f"pip {e.name} Установлено!", fg="#00CF00")
                 label_ru.pack(anchor="nw", pady=5)
-                label_eng.config(text=f"pip {e.name} it was established", fg="green")
+                label_eng.config(text=f"pip {e.name} it was established", fg="#00CF00")
                 label_eng.pack(anchor="nw", pady=5)
 
             if result.returncode != 0:
