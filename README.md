@@ -59,6 +59,11 @@
 **10. ``Windows Notify`` - создает оконное уведомление используя ``ctypes``
 подробно по ссылке: [Windows-notifications](https://github.com/hiikikomorii/Windows-notifications)**
 
+**10. ``Monitoring`` - выводит на экран % загруженности ``RAM``, ``CPU`` и ``актуальное время``. Работает по принципу ``диспечера задач``**
+
+![monitor](assets/monitoring_work.png)
+
+
 ![notifywork.png](assets/notifywork.png)
 ***
 ### Boottraper
@@ -152,6 +157,7 @@
 **P.S. ``Boot_loader`` нужен лишь когда вы впервые запускаете эту сборку, если boot loader запустил ``HidlowToolsGUI``
 ``без ошибок``, то можете запускать HidlowToolsGUI ``напрямую`` и в случае ошибки на стороне модулей, вас перекинет в это меню.  
 Boottraper установлен для всех исполняемых файлов: ``troll``, ``hidlowAPI``, ``hidlowToolsGUI`` и ``DebugConsole``**
+
 
 
 
