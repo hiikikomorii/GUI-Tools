@@ -84,12 +84,6 @@ def select_notify():
     prepare_input(main_notify)
 
 def select_monitor():
-    try:
-        import platform
-        import psutil
-    except ModuleNotFoundError:
-        nomodule_boottraper()
-
     hide_settings()
     menu_frame.pack_forget()
     menu_frame2.pack_forget()
@@ -603,6 +597,11 @@ def hidlowapi_cmd():
 
 #monitor backend
 def times_label():
+    try:
+        import platform
+        import psutil
+    except ModuleNotFoundError:
+        nomodule_boottraper()
     while True:
         try:
             t = datetime.now().strftime("%H:%M:%S")
