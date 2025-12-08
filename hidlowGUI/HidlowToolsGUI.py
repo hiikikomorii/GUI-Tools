@@ -3,7 +3,6 @@ import sys
 import os
 import tkinter as tk
 from datetime import date, datetime
-import re
 import json
 from pathlib import Path
 import threading
@@ -24,6 +23,7 @@ try:
     from PIL import Image, ImageTk
     from colorama import init, Fore, Style
     import requests
+    from faker import Faker
     from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
 
 except ModuleNotFoundError as e:
@@ -45,7 +45,6 @@ _orig_lightblue_ex = Fore.LIGHTBLUE_EX
 _orig_cyan = Fore.CYAN
 _orig_lightcyan_ex = Fore.LIGHTCYAN_EX
 
-
 print(f"{Style.BRIGHT}{Fore.BLUE}GitHub: https://github.com/hiikikomorii {Fore.RESET}|{Fore.LIGHTCYAN_EX} {data1} - {time1}")
 
 # настройка gui
@@ -57,6 +56,7 @@ root.title("HidlowTools-GUI-V2")
 #prepare
 def select_api1():
     try:
+        import re
         import phonenumbers
         import urllib.request
     except ModuleNotFoundError:
@@ -70,11 +70,6 @@ def select_api3():
     prepare_input(api_lat)
 
 def select_qrcode():
-    try:
-        import qrcode
-    except ModuleNotFoundError:
-        nomodule_boottraper()
-
     prepare_input(qrcodee)
 
 def select_gptchc():
@@ -99,10 +94,6 @@ def select_currency():
     currencyback_button.configure(command=go_back)
 
 def select_faker():
-    try:
-        from faker import Faker
-    except ModuleNotFoundError:
-        nomodule_boottraper()
     hide_settings()
     menu_frame.pack_forget()
     menu_frame2.pack_forget()
@@ -375,6 +366,11 @@ def api_lat():
         button3.configure(text_color="#FF0000")
 
 def qrcodee():
+    try:
+        import qrcode
+    except ModuleNotFoundError:
+        nomodule_boottraper()
+
     user_input = entry.get().strip()
 
     clear_entry_frame()
@@ -390,6 +386,7 @@ def qrcodee():
         img = qrcode.make(user_input)
         img.save("qrcode.png")
         output_label.configure(text="QRcode сохранен", text_color="green")
+        output_label.pack(pady=5)
         print(f"{Fore.BLUE}{Style.BRIGHT}[QR]{Style.NORMAL} {Fore.LIGHTGREEN_EX}QR код сгенерирован и сохранён как 'qrcodde.png'")
 
     except Exception as er:
@@ -613,14 +610,14 @@ def times_label():
             labelmem.configure(text=f"\rИспользовано {mem.percent}% RAM")
             labelmem.pack()
 
-            cpu = psutil.cpu_percent(interval=0.1)
+            cpu = psutil.cpu_percent(interval=1)
             labelcpu.configure(text=f"\rИспользовано {cpu}% CPU")
             labelcpu.pack()
 
             
         except RuntimeError:
             return
-        time.sleep(1)
+
 
 
 # faker backend
@@ -791,6 +788,8 @@ def fakerjp():
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
     copyable.configure(cursor="arrow")
+
+
 
 
 def show_messagebox(text, title, icon):
@@ -1101,16 +1100,15 @@ def change_background():
         exitadapter_button.configure(image=exit_buttons[2])
         rebootbutton_button.configure(image=reboot_buttons[2])
 
-        about_btn.configure(fg_color="#000C7A", hover_color="#000538")
-        settings_button.configure(fg_color="#000C7A", hover_color="#000538")
-        exitadapter_button.configure(fg_color="#0F0BAC", hover_color="#0F0BAC", border_color="#0F0BAC")
-        rebootbutton_button.configure(fg_color="#0F0BAC", hover_color="#0F0BAC", border_color="#0F0BAC")
+
+        exitadapter_button.configure(fg_color="#04151C", hover_color="#04151C", border_color="#04151C")
+        rebootbutton_button.configure(fg_color="#04151C", hover_color="#04151C", border_color="#04151C")
 
         print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg3.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLUE_EX}BLUE ")
 
-        root.configure(fg_color="#0F0AB0")
-        settings_frame.configure(fg_color="#0F0BAC")
-        menu_frame2.configure(fg_color="#0F0AB0")
+        root.configure(fg_color="#041718")
+        settings_frame.configure(fg_color="#041715")
+        menu_frame2.configure(fg_color="#04151C")
 
         confirm_button.configure(text_color="#00CF00")
         fakerback_button.configure(text_color="red")
@@ -1121,20 +1119,22 @@ def change_background():
         for widgets_menu2 in settings_frame.winfo_children():
             if isinstance(widgets_menu2, ctk.CTkButton):
                 widgets_menu2.configure(
-                    fg_color="#000C7A",
-                    hover_color="#000538",
+                    fg_color="#051E29",
+                    hover_color="#031117",
                 )
+                about_btn.configure(fg_color="#051E29", hover_color="#031117")
+                settings_button.configure(fg_color="#051E29", hover_color="#031117")
 
 
         for frame in (menu_frame, entry_frame, about_frame, faker_frame, currency_frame, output_label):
-            frame.configure(fg_color="#0C09BE")
+            frame.configure(fg_color="#041718")
 
             for widget in frame.winfo_children():
                 try:
                     if isinstance(widget, ctk.CTkButton):
                         widget.configure(
-                            fg_color="#00A0F0",
-                            hover_color="#0088CC",
+                            fg_color="#0A3B45",
+                            hover_color="#031114",
                         )
 
                 except Exception as a:
