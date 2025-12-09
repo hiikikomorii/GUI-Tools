@@ -3,7 +3,6 @@ import sys
 import os
 import tkinter as tk
 from datetime import date, datetime
-import json
 from pathlib import Path
 import threading
 import time
@@ -16,7 +15,9 @@ def nomodule_boottraper():
         ["cmd", "/c", sys.executable, str(boot_path)],
         creationflags=subprocess.CREATE_NEW_CONSOLE
     )
+    root.destroy()
     sys.exit()
+
 
 try:
     import customtkinter as ctk
@@ -544,6 +545,7 @@ def extract_chat(input_path, chat_name, output_path):
 
 
 def gptchc():
+    import json
     user_input = entry.get().strip()
 
     clear_entry_frame()
@@ -1023,11 +1025,11 @@ bg_images = None
 reboot_buttons = None
 
 try:
-    image_paths = [f"assets/bg_assets/bg{i}.png" for i in range(1, 4)]
+    image_paths = [f"assets/bg_assets/bg{i}.png" for i in range(1, 3)]
     bg = [Image.open(path).resize((1920, 1080)) for path in image_paths]
     bg_images = [ctk.CTkImage(light_image=img, size=(1920, 1080)) for img in bg]
-    exit_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/exit_assets/exitbutton{i}.png").resize((27, 27)), size=(27, 27))for i in range(1, 4)]
-    reboot_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/reboot_assets/rebootbutton{i}.png").resize((25, 25)), size=(25, 25)) for i in range(1, 4)]
+    exit_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/exit_assets/exitbutton{i}.png").resize((27, 27)), size=(27, 27))for i in range(1, 3)]
+    reboot_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/reboot_assets/rebootbutton{i}.png").resize((25, 25)), size=(25, 25)) for i in range(1, 3)]
 
 except Exception as b:
     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка Background : {b}")
@@ -1090,60 +1092,6 @@ def change_background():
                 except Exception as a:
                     print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
         bg_state = 2
-
-
-    elif bg_state == 2:
-        # синий
-        bg_label.configure(image=bg_images[2])
-        bg_label.image = bg_images[2]
-
-        exitadapter_button.configure(image=exit_buttons[2])
-        rebootbutton_button.configure(image=reboot_buttons[2])
-
-
-        exitadapter_button.configure(fg_color="#04151C", hover_color="#04151C", border_color="#04151C")
-        rebootbutton_button.configure(fg_color="#04151C", hover_color="#04151C", border_color="#04151C")
-
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg3.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLUE_EX}BLUE ")
-
-        root.configure(fg_color="#041718")
-        settings_frame.configure(fg_color="#041715")
-        menu_frame2.configure(fg_color="#04151C")
-
-        confirm_button.configure(text_color="#00CF00")
-        fakerback_button.configure(text_color="red")
-        currencyback_button.configure(text_color="red")
-        aboutback_button.configure(text_color="red")
-        back_button.configure(text_color="red")
-
-        for widgets_menu2 in settings_frame.winfo_children():
-            if isinstance(widgets_menu2, ctk.CTkButton):
-                widgets_menu2.configure(
-                    fg_color="#051E29",
-                    hover_color="#031117",
-                )
-                about_btn.configure(fg_color="#051E29", hover_color="#031117")
-                settings_button.configure(fg_color="#051E29", hover_color="#031117")
-
-
-        for frame in (menu_frame, entry_frame, about_frame, faker_frame, currency_frame, output_label):
-            frame.configure(fg_color="#041718")
-
-            for widget in frame.winfo_children():
-                try:
-                    if isinstance(widget, ctk.CTkButton):
-                        widget.configure(
-                            fg_color="#0A3B45",
-                            hover_color="#031114",
-                        )
-
-                except Exception as a:
-                    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
-
-
-
-
-        bg_state = 3
 
     else:
         #black
