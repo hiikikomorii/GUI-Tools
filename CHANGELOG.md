@@ -1,5 +1,5 @@
 ## 09.12.2025
-**1. оптимизирован debugconsole & pingapi_func**
+**1. оптимизирован debugconsole & pingapi_func | 130mb ram -> 18.5mb ram**
 
 ![upd_09.12](assets/console_ram)
 
@@ -15,5 +15,6 @@
 **2. ``Оптимизация GUI`` - раньше скрипт потреблял до 250mb ram. сейчас скрипт потребляет от 150mb до 200mb**
 
 ![ram_optimized.png](assets/ram_optimized.png)
+
 
 
