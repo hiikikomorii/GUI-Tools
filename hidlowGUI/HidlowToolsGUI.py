@@ -80,10 +80,15 @@ def select_notify():
     prepare_input(main_notify)
 
 def select_monitor():
+    global bg_state
     hide_settings()
     menu_frame.pack_forget()
     menu_frame2.pack_forget()
-    monitor_frame.pack()
+    monitor_frame.pack(padx=20)
+    if bg_state == 2:
+        monitor_frame_stat.pack(side="right", anchor="se", padx=20)
+    else:
+        monitor_frame_stat.pack(side="left", anchor="sw", padx=20)
     monitorback_button.configure(command=go_back)
     threading.Thread(target=times_label, daemon=True).start()
 
@@ -601,6 +606,30 @@ def times_label():
         import psutil
     except ModuleNotFoundError:
         nomodule_boottraper()
+
+    sys1 = platform.node()
+    sys2 = platform.platform()
+    sys3 = platform.machine()
+    sys4 = platform.processor()
+    sys5 = psutil.cpu_count()
+    sys6 = psutil.cpu_percent(interval=1)
+    os1 = os.getpid()
+
+    syspy1 = platform.python_version()
+    syspy2 = platform.python_build()
+    syspy3 = platform.python_compiler()
+
+    label_info_monitor.configure(text=f"Name: {sys1}\n\n"
+                                      f"OS: {sys2}\n\n"
+                                      f"Machine: {sys3}\n\n"
+                                      f"processor:  {sys4}\n\n"
+                                      f"CPU count:  {sys5}\n\n"
+                                      f"CPU usage: {sys6}\n\n"
+                                      f"Py version:  {syspy1}\n\n"
+                                      f"Py build:  {syspy2}\n\n"
+                                      f"Py compiler:  {syspy3}\n\n"
+                                      f"Script PID: {os1}")
+    label_info_monitor.pack()
     while True:
         try:
             t = datetime.now().strftime("%H:%M:%S")
@@ -895,7 +924,7 @@ def about_project():
     background имеет 5 задних фонов: белый, черный, синий, красный, фиолетовый\n
     fullscreen меняет размер окна из полноэкранного режима в 1280x720\n
     console - с помощью нее вы можете работать с консолью. команды в 'about console'\n\n
-    Версия: BETA monitor func update\n"""
+    Версия: BETA monitoring func fixed\n"""
 
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
@@ -996,6 +1025,7 @@ def go_back_from_entry():
     menu_frame2.pack(pady=20)
 
 def go_back():
+    monitor_frame_stat.pack_forget()
     monitor_frame.pack_forget()
     about_frame.pack_forget()
     currency_frame.pack_forget()
@@ -1057,12 +1087,25 @@ def change_background():
 
         print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
 
+        monitor_frame_stat.configure(fg_color="#FDFDFD")
+        monitor_frame.configure(fg_color="#FDFDFD")
         about_btn.configure(fg_color="#545454", hover_color="#444444")
         settings_button.configure(fg_color="#545454", hover_color="#444444")
         settings_frame.configure(fg_color="#FDFDFD")
         menu_frame2.configure(fg_color="#FDFDFD")
         exitadapter_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
         rebootbutton_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
+
+        label_mon.configure(fg_color="white")
+
+        for labels_monik in (monitor_frame_stat, monitor_frame):
+            for labels_monik_2 in labels_monik.winfo_children():
+                if isinstance(labels_monik_2, ctk.CTkLabel):
+                    labels_monik_2.configure(
+                        fg_color="#FDFDFD",
+                        text_color="black"
+                    )
+                    monitorback_button.configure(fg_color="#858585", hover_color="#6E6E6E")
 
         for widgets_menu2 in settings_frame.winfo_children():
             if isinstance(widgets_menu2, ctk.CTkButton):
@@ -1170,6 +1213,7 @@ faker_frame = ctk.CTkFrame(root, fg_color="black")
 
 #monitor frame
 monitor_frame = ctk.CTkFrame(root, fg_color="black")
+monitor_frame_stat = ctk.CTkFrame(root, fg_color="black")
 
 # кнопки
 button1 = ctk.CTkButton(menu_frame, text="Number", fg_color="#262626", text_color="white", width=50, corner_radius=10, hover_color="#444444", command=select_api1)
@@ -1202,7 +1246,7 @@ button9.pack(side="left", padx=5)
 button10 = ctk.CTkButton(menu_frame, text="Notify", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_notify)
 button10.pack(side="left", padx=5)
 
-button11 = ctk.CTkButton(menu_frame, text="Monitor", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_monitor)
+button11 = ctk.CTkButton(menu_frame, text="Monitoring", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_monitor)
 button11.pack(side="left", padx=5)
 
 
@@ -1268,16 +1312,19 @@ jpbtn.pack(pady=3)
 fakerback_button = ctk.CTkButton(faker_frame, text="Back", fg_color="#262626", text_color="red", hover_color="#444444", width=8, command=go_back)
 fakerback_button.pack(pady=1)
 
-#monitor back
+#monitor
+label_mon = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
+labelmem = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
+labelcpu = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
+
+label_info_monitor = ctk.CTkLabel(monitor_frame_stat, fg_color="black", text_color="white", font=("Arial", 18))
+
 monitorback_button = ctk.CTkButton(monitor_frame, text="Back", fg_color="#262626", text_color="red", hover_color="#444444", width=8, command=go_back)
 monitorback_button.pack(side="bottom", pady=1)
 
 
 #labels
 output_label = ctk.CTkLabel(root, fg_color="black", text_color="#FF0000")
-label_mon = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
-labelmem = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
-labelcpu = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
 
 
 root.mainloop()
