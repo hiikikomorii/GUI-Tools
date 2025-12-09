@@ -1,13 +1,10 @@
 from colorama import init, Fore, Style
-from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
-import phonenumbers
 import requests
-import json, urllib.request
 import sys
 import random
 import re
 import time
-
+import phonenumbers
 
 init(autoreset=True)
 
@@ -71,6 +68,7 @@ def try_ping_ll():
 
 
 def check_internet():
+    import urllib.request
     try:
         urllib.request.urlopen('https://google.com', timeout=7)
         return True
@@ -78,6 +76,7 @@ def check_internet():
         return False
 
 def send_request_ping(url, phone):
+
     _ = phone
     try:
 
@@ -184,6 +183,7 @@ def menu():
     while True:
         user = input("> ").strip().lower()
         if user == "num":
+
             print("wait..")
             user_iput = "+79268471359"
             phone = re.sub(r"\D", "", user_iput)

@@ -1,28 +1,10 @@
 import ctypes
 import sys
 import subprocess
-try:
-    from colorama import init, Fore, Style
-    import psutil, socket, platform
-    import os
-    from datetime import date, datetime
-    import requests
-    from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
-    import phonenumbers
-    import requests
-    import json, urllib.request
-    import random
-    import re
-    import time
-    from pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
-    import threading
+import os
+import time
 
-except ModuleNotFoundError as e:
-    print(e)
-    if e.name == "pingapi_func":
-        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nПапка {e.name} не найдена\nПроверьте совместимость сборки", "debug-console", 0x10)
-        sys.exit()
-
+def nomodule_boottraper():
     boot_path = "../../boot_loader.py"
     subprocess.Popen(
         ["cmd", "/c", sys.executable, str(boot_path)],
@@ -30,8 +12,19 @@ except ModuleNotFoundError as e:
     )
     sys.exit()
 
-init(autoreset=False)
+try:
+    from colorama import init, Fore, Style
+    import requests
+    from pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
+except ModuleNotFoundError as e:
+    print(e)
+    if e.name == "pingapi_func":
+        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nПапка {e.name} не найдена\nПроверьте совместимость сборки", "debug-console", 0x10)
+        sys.exit()
+    nomodule_boottraper()
 
+
+init(autoreset=False)
 _orig_white = Fore.WHITE
 _orig_white_ex = Fore.LIGHTWHITE_EX
 
@@ -68,6 +61,10 @@ def exit_cmd():
     sys.exit()
 
 def info_cmd():
+    try:
+        import psutil, platform
+    except ModuleNotFoundError:
+        nomodule_boottraper()
     sys1 = platform.node()
     sys2 = platform.platform()
     sys3 = platform.machine()
@@ -100,7 +97,7 @@ def reboot_cmd():
     try:
         script_path = os.path.abspath(__file__)
         subprocess.Popen(
-            ["cmd", "/k", sys.executable, str(script_path)],
+            ["cmd", "/c", sys.executable, str(script_path)],
             creationflags=subprocess.CREATE_NEW_CONSOLE
         )
         time.sleep(2)
@@ -109,7 +106,7 @@ def reboot_cmd():
         print(f"{Fore.RED} Reboot error.\n{error_reboot}")
 
 def ipconfig_cmd():
-
+    import socket
     ipv4 = requests.get("https://api.ipify.org").text
     local_ip = socket.gethostbyname(socket.gethostname())
 
@@ -118,7 +115,7 @@ def ipconfig_cmd():
 
 
 def date_cmd():
-
+    from datetime import date, datetime
     time1 = datetime.now().strftime("%H:%M:%S")
     data1 = date.today()
 
@@ -143,6 +140,14 @@ def fgcyan_cmd():
 
 
 def try_ping_number_cmd():
+    try:
+        import random
+        from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
+        import urllib.request
+        import re
+    except ModuleNotFoundError:
+        nomodule_boottraper()
+
     print(Fore.LIGHTWHITE_EX +
     "wait..")
     user_iput = "+79268471359"
