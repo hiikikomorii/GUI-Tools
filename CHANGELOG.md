@@ -4,7 +4,11 @@
 ![upd_09.12](assets/console_ram.png)
 
 **2. Удалена синяя тема для лучшей оптимизации**
+**3. Обновлена функция ``monitoring`` и теперь совместима с белой темой**
 
+![monitor](assets/monitoring_work.png)
+
+![monitor](assets/monitoring_work_white.png)
 ***
 
 ## 07.12.2025
@@ -15,6 +19,7 @@
 **2. ``Оптимизация GUI`` - раньше скрипт потреблял до 250mb ram. сейчас скрипт потребляет от 150mb до 200mb**
 
 ![ram_optimized.png](assets/ram_optimized.png)
+
 
 
 
