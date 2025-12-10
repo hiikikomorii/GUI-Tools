@@ -1,15 +1,6 @@
-import tkinter as tk
 import subprocess
 import sys
-import threading
-import os
-import platform
 import ctypes
-from datetime import date, datetime
-fullscreen = True
-root = tk.Tk()
-time1 = datetime.now().strftime("%H:%M:%S")
-data1 = date.today()
 
 try:
     import customtkinter
@@ -38,6 +29,14 @@ except ModuleNotFoundError as e:
         ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nпуть {e.name} не найден\nПроверьте совместимость сборки", "debug-console", 0x10)
         sys.exit()
 
+    from datetime import date, datetime
+    import platform
+    import os
+    import threading
+    import tkinter as tk
+
+    root = tk.Tk()
+
     root.title("BOOT-LOADER-NOMODULE")
     root.attributes('-fullscreen', True)
     root.config(bg="blue")
@@ -45,6 +44,9 @@ except ModuleNotFoundError as e:
     pybuild = platform.python_build()
     pycomp = platform.python_compiler()
     pyver = platform.python_version()
+    fullscreen = True
+    time1 = datetime.now().strftime("%H:%M:%S")
+    data1 = date.today()
 
 
     def exit_bbt():
@@ -199,46 +201,44 @@ Boottraped-menu\n
 
     frame = tk.Frame(root, bg="blue")
     frame.pack(padx=20, anchor="nw")
+
     frame2 = tk.Frame(root, bg="blue")
     frame2.pack(padx=20, anchor="nw")
     info_frame = tk.Frame(root, bg="blue")
     info_frame.pack(side="right", pady=20, padx=20, anchor="se")
 
 
-    btnfullscr = tk.Button(frame2, text="Fullscreen", activebackground="#0010A7", bg="blue", fg="white", command=fullscreen_on, width=10)
-    btnfullscr.pack(side="left", padx=5, pady=5)
+    btnfullscr = tk.Button(frame2, text="Fullscreen", activebackground="#0010A7", bg="blue", fg="white", command=fullscreen_on, width=10).pack(side="left", padx=5, pady=5)
 
-    theme_btn = tk.Button(frame2, text="Theme", activebackground="#0010A7", bg="blue", fg="white", command=theme_tk, width=10)
-    theme_btn.pack(side="left", padx=5, pady=5)
+    theme_btn = tk.Button(frame2, text="Theme", activebackground="#0010A7", bg="blue", fg="white", command=theme_tk, width=10).pack(side="left", padx=5, pady=5)
+
+    label_time = tk.Label(info_frame, text=f"{data1} {time1}", fg="white", bg="blue", font=("bold", 12)).pack(pady=10)
 
 
-    label_time = tk.Label(info_frame, text=f"{data1} {time1}", fg="white", bg="blue", font=("bold", 12))
-    label_time.pack(pady=10)
+    label_help = tk.Label(info_frame, text=text, fg="white", bg="blue", font=("bold", 12)).pack(pady=10)
 
-    label_help = tk.Label(info_frame, text=text, fg="white", bg="blue", font=("bold", 12))
-    label_help.pack(pady=10)
 
-    labelinfo = tk.Label(info_frame, text=f"version: {pyver}\ncompiler: {pycomp}\nbuild: {pybuild}", fg="white", bg="blue", font=("bold", 15))
-    labelinfo.pack(pady=5)
+    labelinfo = tk.Label(info_frame, text=f"version: {pyver}\ncompiler: {pycomp}\nbuild: {pybuild}", fg="white", bg="blue", font=("bold", 15)).pack(pady=5)
 
-    label_ru = tk.Label(frame, fg="white", bg="blue", font=("bold", 15), text=f"Отсутствующие модули: {e.name}", justify="left", anchor="nw")
-    label_ru.pack(anchor="nw", pady=5)
 
-    label_eng = tk.Label(frame, fg="white", bg="blue", font=("bold", 15), text=f"Missing modules: {e.name}",justify="left", anchor="nw")
-    label_eng.pack(anchor="nw", pady=5)
+    label_ru = tk.Label(frame, fg="white", bg="blue", font=("bold", 15), text=f"Отсутствующие модули: {e.name}", justify="left", anchor="nw").pack(anchor="nw", pady=5)
+
+
+    label_eng = tk.Label(frame, fg="white", bg="blue", font=("bold", 15), text=f"Missing modules: {e.name}",justify="left", anchor="nw").pack(anchor="nw", pady=5)
+
 
     label_pipudp = tk.Label(root, fg="white", bg="blue", font=("bold", 15), text=f"", justify="left", anchor="sw")
 
-    btn_exit = tk.Button(frame, text="Exit", activebackground="#0010A7", bg="blue", fg="white", command=exit_bbt, width=10)
-    btn_exit.pack(side="left", padx=5, pady=5)
+    btn_exit = tk.Button(frame, text="Exit", activebackground="#0010A7", bg="blue", fg="white", command=exit_bbt, width=10).pack(side="left", padx=5, pady=5)
 
-    btn_reboot = tk.Button(frame, text="Reboot", activebackground="#0010A7", bg="blue", fg="white", command=reboot_bsod, width=10)
-    btn_reboot.pack(side="left", padx=5, pady=5)
 
-    btn_download = tk.Button(frame, text="Install", activebackground="#0010A7", bg="blue", fg="white", command=thread_install_pip_cmd, width=10)
-    btn_download.pack(side="left", padx=5, pady=5)
+    btn_reboot = tk.Button(frame, text="Reboot", activebackground="#0010A7", bg="blue", fg="white", command=reboot_bsod, width=10).pack(side="left", padx=5, pady=5)
 
-    btn_pip = tk.Button(frame, text="upgrade pip", activebackground="#0010A7", bg="blue", fg="white", command=thread_upd_pip_cmd, width=10)
-    btn_pip.pack(side="left", padx=5, pady=5)
+
+    btn_download = tk.Button(frame, text="Install", activebackground="#0010A7", bg="blue", fg="white", command=thread_install_pip_cmd, width=10).pack(side="left", padx=5, pady=5)
+
+
+    btn_pip = tk.Button(frame, text="upgrade pip", activebackground="#0010A7", bg="blue", fg="white", command=thread_upd_pip_cmd, width=10).pack(side="left", padx=5, pady=5)
+
 
     root.mainloop()

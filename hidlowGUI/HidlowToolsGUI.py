@@ -1250,28 +1250,25 @@ button11 = ctk.CTkButton(menu_frame, text="Monitoring", fg_color="#262626", text
 button11.pack(side="left", padx=5)
 
 
+#buttons in menu_frame2
 about_btn = ctk.CTkButton(menu_frame2, text="Info", fg_color="#262626", text_color="white", hover_color="#444444", width=5, command=select_about)
 about_btn.pack(side="left", padx=5)
-
 settings_button = ctk.CTkButton(menu_frame2, text="Settings", fg_color="#262626", text_color="white", hover_color="#444444", width=10, corner_radius=10, command=toggle_settings)
 settings_button.pack(side="left", padx=5)
 
+#buttons in settings
 btn1 = ctk.CTkButton(settings_frame, text="fullscreen", fg_color="#262626", text_color="#00CF00", hover_color="#444444", width=85, corner_radius=10, command=toggle_fullscreen)
 btn1.pack(pady=2)
-
 btn2 = ctk.CTkButton(settings_frame, text="background", fg_color="#262626", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=change_background)
 btn2.pack(pady=3)
-
 btn3 = ctk.CTkButton(settings_frame, text="folder", fg_color="#262626", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=open_folder)
 btn3.pack(pady=3)
-
 btn4 = ctk.CTkButton(settings_frame, text="console", fg_color="#262626", text_color="white", hover_color="#444444", width=90, corner_radius=10, command=consoleadapter)
 btn4.pack(pady=3)
 
-
+#custom buttons exit & reboot
 exitadapter_button = ctk.CTkButton(menu_frame2, text="", image=exit_buttons[0], fg_color="black", hover_color="black", corner_radius=0, border_width=2, border_color="black", width=10, command=exitt)
 exitadapter_button.pack(side="right", padx=5)
-
 rebootbutton_button = ctk.CTkButton(menu_frame2, text="", image=reboot_buttons[0], fg_color="black", hover_color="black", corner_radius=0, border_width=2, border_color="black", width=10, command=menu_reboot)
 rebootbutton_button.pack(side="right", padx=5)
 
@@ -1322,9 +1319,7 @@ label_info_monitor = ctk.CTkLabel(monitor_frame_stat, fg_color="black", text_col
 monitorback_button = ctk.CTkButton(monitor_frame, text="Back", fg_color="#262626", text_color="red", hover_color="#444444", width=8, command=go_back)
 monitorback_button.pack(side="bottom", pady=1)
 
-
 #labels
 output_label = ctk.CTkLabel(root, fg_color="black", text_color="#FF0000")
-
 
 root.mainloop()
