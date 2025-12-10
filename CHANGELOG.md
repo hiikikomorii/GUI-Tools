@@ -1,3 +1,11 @@
+## 10.12.2025
+**1. Оптимизирована работа GUI (70mb ram) и boottraper (11,8 mb)**
+
+![upd_10.12](assets_upd/ram_70.png)
+
+![upd_10.12](assets_upd/bsod_11.png)
+
+***
 ## 09.12.2025
 **1. оптимизирован debugconsole & pingapi_func | 130mb ram -> 18.5mb ram**
 
@@ -19,6 +27,7 @@
 **2. ``Оптимизация GUI`` - раньше скрипт потреблял до 250mb ram. сейчас скрипт потребляет от 150mb до 200mb**
 
 ![ram_optimized.png](assets/ram_optimized.png)
+
 
 
 
