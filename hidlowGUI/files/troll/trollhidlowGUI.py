@@ -1,6 +1,8 @@
 import subprocess
 import sys
 import ctypes
+import tkinter as tk
+import threading
 try:
     from pynput.keyboard import Controller, Key
     import time
@@ -17,48 +19,46 @@ except ModuleNotFoundError as e:
 init(autoreset=True)
 keyboard = Controller()
 
-def trooll():
+root = tk.Tk()
+root.config(bg="#080808")
+label_main = tk.Label(root, bg="#080808", fg="white")
+
+
+def troll_start():
     try:
         with open("text.txt", "r", encoding="utf-8") as f:
             words = f.read().splitlines()
     except Exception as error_txt:
-        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\ntxt не найден\n{error_txt}\nПроверьте совместимость сборки","troll", 0x10)
+        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\ntxt не найден\n{error_txt}\nПроверьте совместимость сборки", "troll", 0x10)
         sys.exit()
 
     i = 0
-
-    print(Fore.LIGHTCYAN_EX + "1 - start  2 - exit")
+    label_main.config(text="wait 5 sec..", fg="white")
+    label_main.pack()
+    time.sleep(5)
     while True:
-        troll_cmd = input("> ").strip()
-        if troll_cmd == "1":
-            print(Fore.LIGHTCYAN_EX + "выберите скорость вывода (оптимально от 0.5)")
-            time1231 = float(input("> "))
-            while True:
+        while i < len(words):
 
-                print(Fore.BLUE + "wait 5 sec")
-                time.sleep(5)
+            for _ in range(10):
+                if i >= len(words):
+                    print(f"{Fore.LIGHTRED_EX}Скрипт закончен")
+                    break
 
-                while i < len(words):
-
-                    for _ in range(10):
-                        if i >= len(words):
-                            print(f"{Fore.LIGHTRED_EX}Скрипт закончен")
-                            break
-
-                        keyboard.type(words[i])
-                        keyboard.press(Key.enter)
-                        keyboard.release(Key.enter)
-                        time.sleep(time1231)
-                        i += 1
-
-                    input(f"{Fore.BLUE}Нажми Enter, чтобы продолжить...")
-                    print(Fore.BLUE + " wait 3 sec")
-                    time.sleep(3)
-        elif troll_cmd == "2":
-            sys.exit()
-
-        else:
-            print(Fore.LIGHTCYAN_EX + "1 - start  2 - exit")
+                keyboard.type(words[i])
+                keyboard.press(Key.enter)
+                keyboard.release(Key.enter)
+                time.sleep(0.5)
+                i += 1
 
 
-trooll()
+def troll_start_thread():
+    threading.Thread(target=troll_start, daemon=True).start()
+
+def troll_stop():
+    root.destroy()
+
+main_frame = tk.Frame(root, bg="#080808")
+main_frame.pack()
+main_button = tk.Button(main_frame, text="start", command=troll_start_thread, bg="#080808", fg="white", activebackground="black", activeforeground="white").pack(side="left", padx=10)
+stop_button = tk.Button(main_frame, text="exit", command=troll_stop, bg="red", activebackground="red", fg="white").pack(side="left")
+root.mainloop()
