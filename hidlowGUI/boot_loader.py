@@ -9,12 +9,10 @@ try:
     import colorama
     import qrcode
     import psutil
-    from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
     import phonenumbers
     from faker import Faker
     import pynput
     from flask import Flask, jsonify
-    from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
 
 
     hidlow_path = "HidlowToolsGUI.py"

@@ -25,12 +25,8 @@ try:
     from colorama import init, Fore, Style
     import requests
     from faker import Faker
-    from files.consoledebug.pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
 
 except ModuleNotFoundError as e:
-    if e.name == "files.consoledebug.pingapi_func":
-        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nпуть {e.name} не найден\nПроверьте совместимость сборки", "debug-console", 0x10)
-        sys.exit()
     nomodule_boottraper()
 
 
@@ -266,8 +262,8 @@ def api_ip():
         text = (
             f"IP: {data.get('ip', 'не найдено')}\n"
             f"Тип: {data.get('type', 'не найдено')}\n"
-            f"Долгота: {data.get('latitudee', 'не найдено')}\n"
-            f"Широта: {data.get('longitudee', 'не найдено')}\n"
+            f"Долгота: {data.get('latitude', 'не найдено')}\n"
+            f"Широта: {data.get('longitude', 'не найдено')}\n"
             f"Континент: {data.get('continent', 'не найдено')}\n"
             f"Страна: {data.get('country', 'не найдено')}\n"
             f"Столица: {data.get('country_capital', 'не найдено')}\n"
@@ -598,6 +594,7 @@ def hidlowapi_cmd():
     except Exception as error_hidlowapi:
         button9.configure(text_color="#FF0000")
         print(f"{Fore.BLUE}{Style.BRIGHT}[API Server]{Style.NORMAL} {Fore.RED}произошла ошибка при запуске 'HidlowAPI'\n{error_hidlowapi}")
+
 
 #monitor backend
 def times_label():
