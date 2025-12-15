@@ -73,13 +73,13 @@ def select_gptchc():
     prepare_input(gptchc)
 
 def select_notify():
-    prepare_input(main_notify)
+    prepare_hide()
+    prepare_input(ctypes_notify)
+
 
 def select_monitor():
     global bg_state
-    hide_settings()
-    menu_frame.pack_forget()
-    menu_frame2.pack_forget()
+    prepare_hide()
     monitor_frame.pack(padx=20)
     if bg_state == 2:
         monitor_frame_stat.pack(side="right", anchor="se", padx=20)
@@ -89,35 +89,32 @@ def select_monitor():
     threading.Thread(target=times_label, daemon=True).start()
 
 def select_currency():
-    hide_settings()
-    menu_frame.pack_forget()
-    menu_frame2.pack_forget()
+    prepare_hide()
     currency_frame.pack(pady=10)
     currencyback_button.configure(command=go_back)
 
 def select_faker():
-    hide_settings()
-    menu_frame.pack_forget()
-    menu_frame2.pack_forget()
+    prepare_hide()
     faker_frame.pack(pady=10)
     fakerback_button.configure(command=go_back)
 
 #prepare about
 def select_about():
-    hide_settings()
-    menu_frame.pack_forget()
-    menu_frame2.pack_forget()
+    prepare_hide()
     about_frame.pack(pady=10)
     aboutback_button.configure(command=go_back)
 
 #prepare api
 def prepare_input(api_func):
-    hide_settings()
-    menu_frame.pack_forget()
-    menu_frame2.pack_forget()
+    prepare_hide()
     clear_entry_frame()
     entry_frame.pack(pady=10)
     confirm_button.configure(command=api_func)
+#prepare hide main menu
+def prepare_hide():
+    hide_settings()
+    menu_frame.pack_forget()
+    menu_frame2.pack_forget()
 
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
@@ -509,11 +506,14 @@ def select_btc():
         btc_button.configure(text_color="#FF0000")
 
 def extract_chat(input_path, chat_name, output_path):
+    import json
     with open(input_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     chat = next((conv for conv in data if conv.get("title") == chat_name), None)
     if not chat:
+        output_label.configure(text=f"чат с названием '{chat_name}' не найден", text_color="red")
+        output_label.pack(pady=5)
         print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.RED}Чат с названием '{Style.BRIGHT}{chat_name}{Style.NORMAL}' не найден.")
         return
 
@@ -542,17 +542,17 @@ def extract_chat(input_path, chat_name, output_path):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n\n".join(messages))
 
-    print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Чат '{Style.BRIGHT}{chat_name}{Style.NORMAL}' сохранён в {Style.BRIGHT}{output_path}{Style.NORMAL}'")
-
+    print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Чат '{Style.BRIGHT}{chat_name}{Style.NORMAL}' сохранён как {Style.BRIGHT}{output_path}{Style.NORMAL}'")
+    output_label.configure(text=f"Чат '{chat_name}' сохранён как {output_path}", text_color="#00CF00")
+    output_label.pack(pady=5)
 
 def gptchc():
-    import json
     user_input = entry.get().strip()
 
     clear_entry_frame()
 
     if not user_input:
-        output_label.configure(text="Введите ИмяФайла.txt", text_color="red")
+        output_label.configure(text="Введите имя файла", text_color="red")
         output_label.pack(pady=5)
         print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}название файла не было введено.")
         return
@@ -819,10 +819,9 @@ def fakerjp():
 
 
 
-
 def show_messagebox(text, title, icon):
     ctypes.windll.user32.MessageBoxW(0, text, title, icon)
-def main_notify():
+def ctypes_notify():
     notify_icons = {
         "info": 0x40,
         "warning": 0x30,
@@ -852,10 +851,14 @@ def main_notify():
         icon_code = notify_icons.get(icon_type, 0x10)
 
         print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.GREEN}Notification was shown")
+        output_label.configure(text="Notification was shown", text_color="#00CF00")
+        output_label.pack(pady=5)
 
-        threading.Thread(target=show_messagebox, args=(text, title, icon_code)).start()
+        threading.Thread(target=show_messagebox, args=(text, title, icon_code), daemon=True).start()
 
     except Exception as error_ctypes:
+        output_label.configure(text=f"error\n{error_ctypes}", text_color="red")
+        output_label.pack()
         print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.RED}error ctype\n{error_ctypes}")
 
 
@@ -913,7 +916,7 @@ def about_project():
     API - маленький API сервер на Flask.
     доступные домены: /home, /home/ip=(запрос), home/phone=<запрос>
     /home/lat=<запрос1>&lon=<запрос2>\n
-    Notify - создает windows-уведомление: название окна, значок, текст
+    Window notif - создает windows-уведомление: название окна, значок, текст
     пример: [window] [error] [text in window]
     доступные значки: info, warning, error, question\n
     Monitor - показывает информацию о системе в реальном времени\n
@@ -921,7 +924,7 @@ def about_project():
     background имеет 5 задних фонов: белый, черный, синий, красный, фиолетовый\n
     fullscreen меняет размер окна из полноэкранного режима в 1280x720\n
     console - с помощью нее вы можете работать с консолью. команды в 'about console'\n\n
-    Версия: BETA monitoring func fixed\n"""
+    Версия: BETA notifications upd\n"""
 
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
@@ -1084,16 +1087,7 @@ def change_background():
 
         print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
 
-        monitor_frame_stat.configure(fg_color="#FDFDFD")
-        monitor_frame.configure(fg_color="#FDFDFD")
-        about_btn.configure(fg_color="#545454", hover_color="#444444")
-        settings_button.configure(fg_color="#545454", hover_color="#444444")
-        settings_frame.configure(fg_color="#FDFDFD")
-        menu_frame2.configure(fg_color="#FDFDFD")
-        exitadapter_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
-        rebootbutton_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
 
-        label_mon.configure(fg_color="white")
 
         for labels_monik in (monitor_frame_stat, monitor_frame):
             for labels_monik_2 in labels_monik.winfo_children():
@@ -1103,26 +1097,24 @@ def change_background():
                         text_color="black"
                     )
                     monitorback_button.configure(fg_color="#858585", hover_color="#6E6E6E")
+                    monitor_frame_stat.configure(fg_color="#FDFDFD")
+                    monitor_frame.configure(fg_color="#FDFDFD")
+                    label_mon.configure(fg_color="white")
 
-        for widgets_menu2 in settings_frame.winfo_children():
-            if isinstance(widgets_menu2, ctk.CTkButton):
-                widgets_menu2.configure(
-                    fg_color="#545454",
-                    hover_color="#444444",
-                )
-
-        for frame in (root, menu_frame, entry_frame, about_frame, currency_frame, faker_frame,output_label):
+        for frame in (
+        root, menu_frame2, settings_frame, menu_frame, entry_frame, about_frame, currency_frame, faker_frame,
+        output_label):
             frame.configure(fg_color="#FDFDFD")
             for widget in frame.winfo_children():
                 try:
                     if isinstance(widget, ctk.CTkButton):
                         widget.configure(
-                            fg_color="#858585",
-                            hover_color="#6E6E6E",
+                            fg_color="#545454",
+                            hover_color="#444444",
                         )
-
+                        exitadapter_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
+                        rebootbutton_button.configure(fg_color="#FDFDFD", hover_color="#FDFDFD", border_color="#FDFDFD")
                         confirm_button.configure(text_color="#00CF00")
-
                         fakerback_button.configure(text_color="red")
                         currencyback_button.configure(text_color="red")
                         aboutback_button.configure(text_color="red")
@@ -1141,13 +1133,25 @@ def change_background():
         exitadapter_button.configure(image=exit_buttons[0])
         rebootbutton_button.configure(image=reboot_buttons[0])
 
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
+
         menu_frame2.configure(fg_color="black")
         about_btn.configure(fg_color="#262626", hover_color="#444444")
         settings_button.configure(fg_color="#262626", hover_color="#444444")
         exitadapter_button.configure(fg_color="black", hover_color="black", border_color="black")
         rebootbutton_button.configure(fg_color="black", hover_color="black", border_color="black")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
+        for labels_monik in (monitor_frame_stat, monitor_frame):
+            for labels_monik_2 in labels_monik.winfo_children():
+                if isinstance(labels_monik_2, ctk.CTkLabel):
+                    labels_monik_2.configure(
+                        fg_color="black",
+                        text_color="#FDFDFD"
+                    )
+                    monitorback_button.configure(fg_color="#262626", hover_color="#444444")
+                    monitor_frame_stat.configure(fg_color="black")
+                    monitor_frame.configure(fg_color="black")
+                    label_mon.configure(fg_color="black")
 
         for frame in (
         root, menu_frame, settings_frame, entry_frame, about_frame, currency_frame, faker_frame,
@@ -1240,7 +1244,7 @@ button8.pack(side="left", padx=5)
 button9 = ctk.CTkButton(menu_frame, text="API", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=hidlowapi_cmd)
 button9.pack(side="left", padx=5)
 
-button10 = ctk.CTkButton(menu_frame, text="Notify", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_notify)
+button10 = ctk.CTkButton(menu_frame, text="Ctypes Notif", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_notify)
 button10.pack(side="left", padx=5)
 
 button11 = ctk.CTkButton(menu_frame, text="Monitoring", fg_color="#262626", text_color="white", width=50, corner_radius=10,  hover_color="#444444", command=select_monitor)
@@ -1305,6 +1309,7 @@ jpbtn = ctk.CTkButton(faker_frame, text="Japanese", fg_color="#262626", text_col
 jpbtn.pack(pady=3)
 fakerback_button = ctk.CTkButton(faker_frame, text="Back", fg_color="#262626", text_color="red", hover_color="#444444", width=8, command=go_back)
 fakerback_button.pack(pady=1)
+
 
 #monitor
 label_mon = ctk.CTkLabel(monitor_frame, fg_color="black", text_color="white", font=("Arial", 30))
