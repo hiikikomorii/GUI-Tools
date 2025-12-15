@@ -31,24 +31,22 @@ _orig_white_ex = Fore.LIGHTWHITE_EX
 
 def help_cmd():
     print(f"""{Fore.LIGHTWHITE_EX}
-clear
-info
-myip
-help
-time
-exit
-reboot
-fg blue
-fg cyan
-fg red
-fg white
-ping number
-ping ip
-ping latlon
-ping btc
-ping ton
-
-{Style.BRIGHT}подробное описание команд: [GUI] -> info -> about console
+clear - очищает консоль
+info - выводит информацию о системе
+myip - выводит ipv4 и локальный ip
+help - список комманд
+time - актуальная дата и время
+exit - выход
+reboot - перезагрузка скрипта
+fg blue - меняет цвет консоли на синий
+fg cyan - меняет цвет консоли на голубой
+fg red - меняет цвет консоли на красный
+fg white - меняет цвет консоли на белый
+ping number - проверяет Number API на работоспособность
+ping ip - проверяет IP API на работоспособность
+ping latlon - проверяет  Lat/Lon API на работоспособность
+ping btc - проверяет BTC API на работоспособность
+ping ton - проверяет TON API на работоспособность
 """)
 
 
@@ -70,25 +68,25 @@ def info_cmd():
     sys3 = platform.machine()
     sys4 = platform.processor()
     sys5 = psutil.cpu_count()
-    sys6 = psutil.cpu_percent(interval=1)
-    sys7 = psutil.virtual_memory()
-
+    sys6 = psutil.virtual_memory()
     syspy1 = platform.python_version()
     syspy2 = platform.python_build()
     syspy3 = platform.python_compiler()
-
+    os1 = os.getpid()
     try:
         print(f"{Fore.WHITE}Name:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys1}")
         print(f"{Fore.WHITE}OS:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys2}")
         print(f"{Fore.WHITE}Machine:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys3}")
         print(f"{Fore.WHITE}processor:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys4}")
         print(f"{Fore.WHITE}CPU count:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys5}")
-        print(f"{Fore.WHITE}CPU usage:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys6}")
-        print(f"{Fore.WHITE}Memory:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys7}")
+        print(f"{Fore.WHITE}Memory:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys6}")
+        print(f"{Fore.WHITE}Script PID:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {os1}")
 
         print(f"{Fore.WHITE}Py Version:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {syspy1}")
         print(f"{Fore.WHITE}Py Build:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {syspy2}")
         print(f"{Fore.WHITE}Py Compiler:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {syspy3}")
+
+
     except Exception as error_sysinfo:
         print(f"{Fore.RED}error info about system\n{error_sysinfo}")
 

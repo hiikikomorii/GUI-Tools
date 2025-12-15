@@ -4,7 +4,6 @@ import sys
 import random
 import re
 import time
-import phonenumbers
 
 init(autoreset=True)
 
@@ -97,6 +96,7 @@ def send_request_ping(url, phone):
 
 
 def try_ping_number(phone):
+    import phonenumbers
     try:
         url = f"https://htmlweb.ru/geo/api.php?json&telcod={phone}"
         data = send_request_ping(url, phone)
