@@ -1,26 +1,22 @@
 import subprocess
 import sys
-try:
-    from flask import Flask, jsonify
-    import requests
-    import json, urllib.request
-    import sys
-    import random
-    import requests
-    import time
-    import re
-    from colorama import init, Fore, Style, Back
-    import phonenumbers
-    from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
-
-except ModuleNotFoundError as e:
+def boot_trap():
     boot_path = "../../boot_loader.py"
     subprocess.Popen(
         ["cmd", "/c", sys.executable, str(boot_path)],
         creationflags=subprocess.CREATE_NEW_CONSOLE
     )
     sys.exit()
+try:
+    from flask import Flask, jsonify
+    import requests
+    import random
+    import requests
+    import time
+    from colorama import init, Fore, Style, Back
 
+except ModuleNotFoundError as e:
+    boot_trap()
 app = Flask(__name__)
 
 user_agents = [
@@ -126,6 +122,10 @@ def latlon(latt, lonn):
 @app.route('/home/phone=<phone>')
 
 def scanphone(phone):
+    import phonenumbers
+    import urllib.request
+    import re
+
     url = f"https://htmlweb.ru/geo/api.php?json&telcod={phone}"
     data = send_request(url, phone)
 
