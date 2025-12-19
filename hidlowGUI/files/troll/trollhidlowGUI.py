@@ -1,12 +1,11 @@
 import subprocess
 import sys
 import ctypes
-import tkinter as tk
 import threading
 try:
+    import customtkinter as ctk
     from pynput.keyboard import Controller, Key
     import time
-    from colorama import init, Fore
 
 except ModuleNotFoundError as e:
     boot_path = "../../boot_loader.py"
@@ -16,49 +15,58 @@ except ModuleNotFoundError as e:
     )
     sys.exit()
 
-init(autoreset=True)
 keyboard = Controller()
+stop_event = threading.Event()
+thread_instance = None
+words = None
 
-root = tk.Tk()
-root.config(bg="#080808")
-label_main = tk.Label(root, bg="#080808", fg="white")
-
+root = ctk.CTk()
 
 def troll_start():
-    try:
-        with open("text.txt", "r", encoding="utf-8") as f:
-            words = f.read().splitlines()
-    except Exception as error_txt:
-        ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\ntxt не найден\n{error_txt}\nПроверьте совместимость сборки", "troll", 0x10)
-        sys.exit()
-
-    i = 0
-    label_main.config(text="wait 5 sec..", fg="white")
-    label_main.pack()
     time.sleep(5)
-    while True:
-        while i < len(words):
+    i = 0
 
-            for _ in range(10):
-                if i >= len(words):
-                    print(f"{Fore.LIGHTRED_EX}Скрипт закончен")
-                    break
+    while i < len(words) and not stop_event.is_set():
+        for _ in range(10):
+            if stop_event.is_set():
+                break
+            if i >= len(words):
+                print("Скрипт закончен")
+                break
 
-                keyboard.type(words[i])
-                keyboard.press(Key.enter)
-                keyboard.release(Key.enter)
-                time.sleep(0.5)
-                i += 1
+            keyboard.type(words[i])
+            keyboard.press(Key.enter)
+            keyboard.release(Key.enter)
+            i += 1
+            time.sleep(0.5)
 
 
 def troll_start_thread():
-    threading.Thread(target=troll_start, daemon=True).start()
+    global words
+    global thread_instance
+    if switch_var.get():
+        stop_event.clear()
+        try:
+            with open("text.txt", "r", encoding="utf-8") as f:
+                words = f.read().splitlines()
+        except Exception as error_txt:
+            ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\ntxt не найден\n{error_txt}\nПроверьте совместимость сборки", "troll", 0x10)
+            sys.exit()
+
+        thread_instance = threading.Thread(target=troll_start, daemon=True)
+        thread_instance.start()
+    else:
+        stop_event.set()
+
 
 def troll_stop():
     root.destroy()
 
-main_frame = tk.Frame(root, bg="#080808")
+main_frame = ctk.CTkFrame(root)
 main_frame.pack()
-main_button = tk.Button(main_frame, text="start", command=troll_start_thread, bg="#080808", fg="white", activebackground="black", activeforeground="white").pack(side="left", padx=10)
-stop_button = tk.Button(main_frame, text="exit", command=troll_stop, bg="red", activebackground="red", fg="white").pack(side="left")
+label_main = ctk.CTkLabel(root, text="скрипт начнет работать\nспустя 5 секунд после запуска").pack()
+
+switch_var = ctk.StringVar(value="off")
+main_button = ctk.CTkSwitch(main_frame, text="start", command=troll_start_thread, variable=switch_var, onvalue="on", offvalue="off").pack(side="left", padx=10)
+stop_button = ctk.CTkButton(main_frame, text="exit", command=troll_stop).pack(side="left")
 root.mainloop()
