@@ -45,6 +45,7 @@ root.attributes('-fullscreen', True)
 root.after(0, lambda:root.state('zoomed'))
 root.title("HidlowTools-GUI-V2")
 
+
 #prepare
 def select_api1():
     try:
@@ -589,6 +590,7 @@ def times_label():
     try:
         import platform
         import psutil
+        import pygetwindow as gw
     except ModuleNotFoundError:
         nomodule_boottraper()
 
@@ -599,6 +601,7 @@ def times_label():
     sys5 = psutil.cpu_count()
     sys6 = psutil.cpu_percent(interval=1)
     os1 = os.getpid()
+    win = gw.getActiveWindow()
 
     syspy1 = platform.python_version()
     syspy2 = platform.python_build()
@@ -613,7 +616,8 @@ def times_label():
                                       f"Py version:  {syspy1}\n\n"
                                       f"Py build:  {syspy2}\n\n"
                                       f"Py compiler:  {syspy3}\n\n"
-                                      f"Script PID: {os1}")
+                                      f"Script PID: {os1}\n\n"
+                                      f"Window: {win.width}x{win.height}")
     label_info_monitor.pack()
     while True:
         try:
@@ -967,10 +971,12 @@ def toggle_fullscreen():
 
     if fullscreen:
         root.attributes("-fullscreen", False)
-        root.geometry("1280x720")
+        root.state("normal")
+        root.geometry("1146x542")
         btn1.configure(text_color="#CF0000")
         print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}RootGeometry '1280x720'")
     else:
+        root.state('zoomed')
         root.attributes("-fullscreen", True)
         if bg_state == 1:
             btn1.configure(text_color="#005E00")
@@ -1221,6 +1227,5 @@ monitorback_button.pack(side="bottom", pady=1)
 
 #labels
 output_label = ctk.CTkLabel(root, text_color="#FF0000")
-
 
 root.mainloop()
