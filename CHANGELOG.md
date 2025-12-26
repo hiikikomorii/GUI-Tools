@@ -1,5 +1,19 @@
-## 27.12.2025
-**скоро дроп**
+# Backend refactoring
+* **Все функции теперь в отдельных модулях**
+* **Оптимизация скрипта до 21% ram**
+* **Улучшена архитектура в main**
+* **Переписана функция go_back()**
+```python
+def go_back(hide_frame):
+    hide_frame.pack_forget()
+    for widget in root.winfo_children():
+        if isinstance(widget, ctk.CTkLabel):
+            widget.pack_forget()
+    menu_frame.pack(pady=20)
+    menu_frame2.pack(pady=20)
+```
+* **В каждом файле пофикшены ошибки/баги**
+
 ***
 ## 21.12.20225
 * **полностью переписан фронтед. Теперь фон сливается и не конфликтует с цветом фреймов, а так же теперь выглядит как системный ctk**
@@ -54,6 +68,7 @@
 **2. ``Оптимизация GUI`` - раньше скрипт потреблял до 250mb ram. сейчас скрипт потребляет от 150mb до 200mb**
 
 ![ram_optimized.png](assets/ram_optimized.png)
+
 
 
 
