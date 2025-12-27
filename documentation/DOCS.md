@@ -1,6 +1,6 @@
 # Documentation
 
-![kumu](assets/загрузка.png)
+![kumu](../assets/загрузка.png)
 ***
 [О проекте](#о-проекте) | [Функционал](#функционал) | [Bootstrapper](#bootstrapper) | [Архитектура проекта](#архитектура-проекта) | [Установка](#установка)
 
@@ -219,4 +219,5 @@ python HidlowToolsGUI.py
 ```
 
 [в начало](#documentation)
+
 
