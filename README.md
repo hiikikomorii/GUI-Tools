@@ -1,6 +1,7 @@
 # Hidlow Tools GUI
 ***
-## Документация в процессе разработки
+[Документация](documentation/DOCS.md) | [Обновления](documentation/CHANGELOG.md)
+
 
 
 
