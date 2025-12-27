@@ -123,7 +123,6 @@ def api_number(entry_wd, label_wd, frame):
 
         copyable.insert("1.0", text)
         copyable.bind("<Control-v>", paste_text)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Запрос выполнен: {user_input}")
         label_wd.pack_forget()
 
     except Exception as er:

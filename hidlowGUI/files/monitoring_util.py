@@ -4,6 +4,7 @@ try:
     import pygetwindow as gw
     import os
     from datetime import date, datetime
+    from colorama import Fore, init, Style
 except ModuleNotFoundError:
     import sys
     import subprocess
@@ -14,6 +15,7 @@ except ModuleNotFoundError:
     )
     sys.exit()
 
+init(autoreset=True)
 def monitoring_start(label_mon_m, label_mem_m, label_cpu_m, label_info_monitor_m):
     sys1 = platform.node()
     sys2 = platform.platform()
@@ -42,6 +44,7 @@ def monitoring_start(label_mon_m, label_mem_m, label_cpu_m, label_info_monitor_m
                                       f"Window: {win.width}x{win.height}\n\n"
                                       f"Path: {path_mon}")
     label_info_monitor_m.pack(pady=5)
+    print(f"{Fore.BLUE}{Style.BRIGHT}[MONITORING]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Monitoring was enabled")
     while True:
         try:
             t = datetime.now().strftime("%H:%M:%S")
