@@ -167,14 +167,14 @@
 
 ## Установка
 
-**Для начала скачиваем этот репозиторий ``HidlowToolsGui-main``. Извлекаем эту папку, затем открываем ``cmd`` (``win+r`` → ``cmd``)
+**Для начала скачиваем этот репозиторий ``HidlowToolsGui-main``. Извлекаем эту папку, затем открываем ``cmd`` (``win+r`` → ``cmd``)**
 
 **Затем, устанавливаем ``зависимости`` (pip):**
 ```bash
-cd C:\Users\User\Downloads\hidlowToolsGUI-main
+cd C:\Users\User\Downloads\hidlowToolsGUI-main\documentation
 pip install -r requirements.txt
 ```
-**важно вписать путь прямо во внуть папки ``hidlowToolsGUI-main``.**  
+**важно вписать путь прямо во внуть папки ``documentation``.**  
 **``pip install -r requirements.txt`` нужен для того, чтобы установить все нужные модули за один раз. Полный список:**
 * **``pip install customtkinter``**
 * **``pip install requests``**
@@ -191,14 +191,14 @@ pip install -r requirements.txt
 Теперь перемещаемся в папку ``HidlowGUI`` и желательно сначала запустить ``bootstrapper`` для проверки на целостность всех модулей:**
 
 ```bash
-cd hidlowgui
+cd ../hidlowgui
 py boot_loader.py
 ```
 
 **или**
 
 ```bash
-cd hidlowgui
+cd ../hidlowgui
 python boot_loader.py
 ```
 
@@ -219,3 +219,4 @@ python HidlowToolsGUI.py
 ```
 
 [в начало](#documentation)
+
