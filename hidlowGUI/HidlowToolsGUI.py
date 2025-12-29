@@ -345,11 +345,10 @@ def menu_reboot():
         ["cmd", "/k", sys.executable, str(script_path)],
         creationflags=subprocess.CREATE_NEW_CONSOLE
     )
-    time.sleep(2)
     sys.exit()
-    root.destroy()
 
-#это логика кнопок
+
+
 def go_back_from_entry():
     entry_frame.pack_forget()
     for widget in root.winfo_children():
@@ -441,6 +440,7 @@ def change_background():
         try:
             for frame in (menu_frame, menu_frame2, settings_frame, about_frame, currency_frame, entry_frame, faker_frame, monitor_frame, monitor_frame_stat):
                 frame.configure(fg_color="#242424")
+
             exitadapter_button.configure(hover_color="#242424", border_color="#242424")
             rebootbutton_button.configure(hover_color="#242424", border_color="#242424")
             btn1.configure(text_color="#00CF00")
@@ -515,11 +515,11 @@ about_btn = ctk.CTkButton(menu_frame2, text="Info", text_color="white", width=5,
 settings_button = ctk.CTkButton(menu_frame2, text="Settings", text_color="white", width=10, corner_radius=10, command=toggle_settings).pack(side="left", padx=5)
 
 #buttons in settings
-btn1 = ctk.CTkButton(settings_frame, text="fullscreen", text_color="#00CF00", width=85, corner_radius=10, command=toggle_fullscreen)
+btn1 = ctk.CTkButton(settings_frame, text="Fullscreen", text_color="#00CF00", width=85, corner_radius=10, command=toggle_fullscreen)
 btn1.pack(pady=2)
-btn2 = ctk.CTkButton(settings_frame, text="background", text_color="white", width=90, corner_radius=10, command=change_background).pack(pady=3)
-btn3 = ctk.CTkButton(settings_frame, text="folder", text_color="white", width=90, corner_radius=10, command=open_folder).pack(pady=3)
-btn4 = ctk.CTkButton(settings_frame, text="console", text_color="white", width=90, corner_radius=10, command=consoleadapter).pack(pady=3)
+btn2 = ctk.CTkButton(settings_frame, text="Theme", text_color="white", width=90, corner_radius=10, command=change_background).pack(pady=3)
+btn3 = ctk.CTkButton(settings_frame, text="Folder", text_color="white", width=90, corner_radius=10, command=open_folder).pack(pady=3)
+btn4 = ctk.CTkButton(settings_frame, text="Console", text_color="white", width=90, corner_radius=10, command=consoleadapter).pack(pady=3)
 
 
 #custom buttons exit & reboot
