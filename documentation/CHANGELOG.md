@@ -1,4 +1,4 @@
-# Backend refactoring
+# Backend refactoring 27.12.2025
 * **Все функции теперь в отдельных модулях**
 * **Оптимизация скрипта до 21% ram**
 * **Улучшена архитектура в main**
@@ -68,6 +68,7 @@ def go_back(hide_frame):
 **2. ``Оптимизация GUI`` - раньше скрипт потреблял до 250mb ram. сейчас скрипт потребляет от 150mb до 200mb**
 
 ![ram_optimized.png](assets/ram_optimized.png)
+
 
 
 
