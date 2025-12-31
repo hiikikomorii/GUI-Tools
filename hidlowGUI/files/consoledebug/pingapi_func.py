@@ -84,7 +84,7 @@ def send_request_ping(url, phone):
         time.sleep(random.uniform(2, 5))
 
         if response.status_code == 200:
-            print(f"{Style.BRIGHT}Запрос: number API{Style.NORMAL}{Fore.RESET} |{Style.BRIGHT}{Fore.LIGHTGREEN_EX} API Доступно")
+            print(f"\r{Style.BRIGHT}Запрос: number API{Style.NORMAL}{Fore.RESET} |{Style.BRIGHT}{Fore.LIGHTGREEN_EX} API Доступно")
             return response.json()
         else:
             print(f"Ошибка: {response.status_code}")

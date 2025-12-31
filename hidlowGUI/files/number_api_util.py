@@ -39,13 +39,13 @@ def send_request(url, phone):
         response = requests.get(url, headers=headers, timeout=10)
         time.sleep(random.uniform(2, 5))
         if response.status_code == 200:
-            print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Запрос выполнен успешно: {phone}")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.MAGENTA}{phone}{Fore.RESET} | {Fore.LIGHTGREEN_EX}True")
             return response.json()
         else:
-            print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка: {response.status_code}")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.LIGHTRED_EX}Ошибка: {response.status_code}")
             return None
     except Exception as er:
-        print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка при отправке запроса: {er}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.LIGHTRED_EX}Ошибка при отправке запроса: {er}")
         return None
 
 def api_number(entry_wd, label_wd, frame):
@@ -56,7 +56,7 @@ def api_number(entry_wd, label_wd, frame):
     if not user_input:
         label_wd.configure(text="Введите номер телефона!", text_color="red")
         label_wd.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}Номер телефона не был введен.")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.LIGHTYELLOW_EX}was not entered")
         return
 
     try:
@@ -82,17 +82,17 @@ def api_number(entry_wd, label_wd, frame):
 
         if not data or not isinstance(data, dict):
             copyable.insert("1.0", "[!] Ошибка: не удалось получить данные.")
-            print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTRED_EX}[!] Ошибка: не удалось получить данные.")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.LIGHTRED_EX}[!] Ошибка: не удалось получить данные.")
             return
 
         if data.get("status_error"):
             copyable.insert("1.0", f"Ошибка API: {data.get('error_message', 'Не удалось получить данные.')}")
-            print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка API: {data.get('error_message', 'Не удалось получить данные.')}")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.LIGHTRED_EX}Ошибка API: {data.get('error_message', 'Не удалось получить данные.')}")
             return
 
         if data.get("limit") is not None and data.get("limit") <= 0:
             copyable.insert("1.0", "Ошибка: лимит запросов исчерпан.")
-            print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTRED_EX}Лимит исчерпан!")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} NUMBER: {Fore.LIGHTRED_EX}Лимит исчерпан!")
             return
 
 
@@ -128,4 +128,4 @@ def api_number(entry_wd, label_wd, frame):
     except Exception as er:
         label_wd.configure(text=f"Ошибка API: {er}", text_color="red")
         label_wd.pack()
-        print(f"{Fore.BLUE}{Style.BRIGHT}[NUMBER]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка API: {er}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API] {Fore.LIGHTRED_EX}Ошибка API: {er}")

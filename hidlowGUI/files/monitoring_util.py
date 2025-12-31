@@ -44,7 +44,7 @@ def monitoring_start(label_mon_m, label_mem_m, label_cpu_m, label_info_monitor_m
                                       f"Window: {win.width}x{win.height}\n\n"
                                       f"Path: {path_mon}")
     label_info_monitor_m.pack(pady=5)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[MONITORING]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Monitoring was enabled")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} MONITORING: {Fore.MAGENTA}Monitoring{Fore.RESET} | {Fore.LIGHTGREEN_EX}was enabled")
     while True:
         try:
             t = datetime.now().strftime("%H:%M:%S")

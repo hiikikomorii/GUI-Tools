@@ -32,7 +32,7 @@ def qrcodee(entry_widget, label_widget):
     if not user_input:
         label_widget.configure(text="Введите URL", text_color="red")
         label_widget.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[QR]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}Url не был введен.")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} QRCODE: {Fore.LIGHTYELLOW_EX}URL was not entered")
         return
 
     try:
@@ -40,14 +40,13 @@ def qrcodee(entry_widget, label_widget):
         img.save("qrcode.png")
         label_widget.configure(text="QRcode сохранен", text_color="green")
         label_widget.pack(pady=5)
-        print(
-            f"{Fore.BLUE}{Style.BRIGHT}[QR]{Style.NORMAL} {Fore.LIGHTGREEN_EX}QR код сгенерирован и сохранён как 'qrcodde.png'")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} QRCODE: QRcode has been {Fore.LIGHTGREEN_EX}generated{Fore.RESET} and {Fore.LIGHTGREEN_EX}saved{Fore.RESET} as '{Fore.MAGENTA}qrcode.png{Fore.RESET}'")
 
     except Exception as er:
 
         label_widget.configure(text="error. see log", text_color="red")
         label_widget.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[QR]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка функции qr: {er}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} QRCODE: {Fore.LIGHTRED_EX}error: {er}")
 
 
 
@@ -61,7 +60,7 @@ def extract_chat(input_path, chat_name, output_path, label_widget=None):
     if not chat:
         label_widget.configure(text=f"чат с названием '{chat_name}' не найден", text_color="red")
         label_widget.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.RED}Чат с названием '{Style.BRIGHT}{chat_name}{Style.NORMAL}' не найден.")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} GPTCHC: chat with the name '{Fore.MAGENTA}{chat_name}{Fore.RESET}' {Fore.LIGHTRED_EX}not found")
         return
 
     messages = []
@@ -89,7 +88,7 @@ def extract_chat(input_path, chat_name, output_path, label_widget=None):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n\n".join(messages))
 
-    print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Чат '{Style.BRIGHT}{chat_name}{Style.NORMAL}' сохранён как {Style.BRIGHT}{output_path}{Style.NORMAL}'")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} GPTCHC: Chat {Fore.LIGHTMAGENTA_EX}{chat_name}{Fore.RESET} {Fore.LIGHTGREEN_EX}saved{Fore.RESET} as {Style.NORMAL}{Fore.MAGENTA}{output_path}")
     label_widget.configure(text=f"Чат '{chat_name}' сохранён как {output_path}", text_color="#00CF00")
     label_widget.pack(pady=5)
 
@@ -101,7 +100,7 @@ def gpthch(entry_widget, label_widget):
     if not user_input:
         label_widget.configure(text="Введите имя файла", text_color="red")
         label_widget.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}название файла не было введено.")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} GPTCHC: {Fore.LIGHTYELLOW_EX}chat name was not entered")
         return
 
     try:
@@ -114,7 +113,7 @@ def gpthch(entry_widget, label_widget):
     except Exception as er:
         label_widget.configure(text="error. see log", text_color="red")
         label_widget.pack()
-        print(f"{Fore.BLUE}{Style.BRIGHT}[GPTCHC]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка функции GPTCHC: {er}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} GPTCHC: {Fore.LIGHTRED_EX}error: {er}")
 
 def show_messagebox(text, title, icon):
     ctypes.windll.user32.MessageBoxW(0, text, title, icon)
@@ -132,12 +131,12 @@ def ctypes_notify(entry_widget, label_widget):
     if not parts:
         label_widget.configure(text_color="red", text="title, icon_type, text")
         label_widget.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.YELLOW}No data has been entered")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} CTYPES: {Fore.YELLOW}No data has been entered")
         return
     if len(parts) != 3:
         label_widget.configure(text_color="red", text="title, icon_type, text")
         label_widget.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.YELLOW}Less than 3 data were entered")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} CTYPES: {Fore.YELLOW}Less than 3 data were entered")
         return
 
     try:
@@ -147,7 +146,7 @@ def ctypes_notify(entry_widget, label_widget):
 
         icon_code = notify_icons.get(icon_type, 0x10)
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.GREEN}Notification was shown")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} CTYPES: {Fore.MAGENTA}Notification{Fore.RESET} | {Fore.LIGHTGREEN_EX}was shown")
         label_widget.configure(text="Notification was shown", text_color="#00CF00")
         label_widget.pack(pady=5)
 
@@ -156,4 +155,4 @@ def ctypes_notify(entry_widget, label_widget):
     except Exception as error_ctypes:
         label_widget.configure(text=f"error\n{error_ctypes}", text_color="red")
         label_widget.pack()
-        print(f"{Fore.BLUE}{Style.BRIGHT}[CTYPES]{Style.NORMAL} {Fore.RED}error ctype\n{error_ctypes}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} CTYPES: {Fore.RED}error: \n{error_ctypes}")

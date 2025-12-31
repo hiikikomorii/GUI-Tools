@@ -1,10 +1,10 @@
-
-import sys
-import subprocess
 import os
 import time
+import sys
 
 def nomodule_boottraper():
+
+    import subprocess
     boot_path = "../../boot_loader.py"
     subprocess.Popen(
         ["cmd", "/c", sys.executable, str(boot_path)],
@@ -15,7 +15,6 @@ def nomodule_boottraper():
 try:
     from colorama import init, Fore, Style
     import requests
-    from pingapi_func import try_ping_number, send_request_ping, try_ping_ll, try_ping_btc, try_ping_ton, try_ping_ip, check_internet, onlypingarg
 except ModuleNotFoundError as e:
     import ctypes
     if e.name == "pingapi_func":
@@ -30,23 +29,34 @@ _orig_white_ex = Fore.LIGHTWHITE_EX
 
 
 def help_cmd():
-    print(f"""{Fore.LIGHTWHITE_EX}
+    print(f"""{Style.BRIGHT}
+    {Fore.LIGHTBLUE_EX}-/> system & info </-{Fore.RESET}{Fore.LIGHTWHITE_EX}
+help - список комманд
 clear - очищает консоль
+reboot - перезагрузка скрипта
+exit - выход
 info - выводит информацию о системе
 myip - выводит ipv4 и локальный ip
-help - список комманд
 time - актуальная дата и время
-exit - выход
-reboot - перезагрузка скрипта
+
+    {Fore.LIGHTBLUE_EX}-/> console color </-{Fore.RESET}{Fore.LIGHTWHITE_EX}
 fg blue - меняет цвет консоли на синий
 fg cyan - меняет цвет консоли на голубой
 fg red - меняет цвет консоли на красный
 fg white - меняет цвет консоли на белый
+    
+    {Fore.LIGHTBLUE_EX}-/> ping utils 
+    
+    </-{Fore.RESET}{Fore.LIGHTWHITE_EX}
 ping number - проверяет Number API на работоспособность
 ping ip - проверяет IP API на работоспособность
 ping latlon - проверяет  Lat/Lon API на работоспособность
 ping btc - проверяет BTC API на работоспособность
 ping ton - проверяет TON API на работоспособность
+ping faker - проверяет модуль Faker и его работоспособность
+ping qrcode - проверяет модуль qrcode и его работоспособность
+ping ctypes - проверяет работоспособность уведомлений в ctypes
+ping monitoring - проверяет модуль pssutil, platform и т.д, и их работоспособность
 """)
 
 
@@ -92,6 +102,7 @@ def info_cmd():
 
 
 def reboot_cmd():
+    import subprocess
     try:
         script_path = os.path.abspath(__file__)
         subprocess.Popen(
@@ -137,8 +148,9 @@ def fgcyan_cmd():
     Fore.LIGHTWHITE_EX = Fore.LIGHTCYAN_EX
 
 
-def try_ping_number_cmd():
+def prepare_ping_number():
     try:
+        from pingapi_func import try_ping_number, check_internet
         import random
         from phonenumbers import carrier, geocoder, timezone, parse, is_valid_number
         import urllib.request
@@ -146,8 +158,7 @@ def try_ping_number_cmd():
     except ModuleNotFoundError:
         nomodule_boottraper()
 
-    print(Fore.LIGHTWHITE_EX +
-    "wait..")
+    print(Fore.LIGHTWHITE_EX + "\rwait..", end="", flush=True)
     user_iput = "+79268471359"
     phone = re.sub(r"\D", "", user_iput)
 
@@ -157,7 +168,41 @@ def try_ping_number_cmd():
     else:
         print(f"{Fore.RED}Отсутствует интернет-соединение!")
 
+def prepare_ip():
+    from pingapi_func import try_ping_ip
+    try_ping_ip()
+
+def prepare_ll():
+    from pingapi_func import try_ping_ll
+    try_ping_ll()
+
+def prepare_btc():
+    from pingapi_func import try_ping_btc
+def prepare_ton():
+    from pingapi_func import try_ping_ton
+
+def prepare_onlypingarg():
+    from pingapi_func import onlypingarg
+    onlypingarg()
+
+def prepare_ping_faker():
+    from ping_utils import ping_faker_all
+    ping_faker_all()
+
+def prepare_ping_qrcode():
+    from ping_utils import ping_qrcode
+    ping_qrcode()
+
+def prepare_ping_ctypes():
+    from ping_utils import ping_ctypes
+    ping_ctypes()
+
+def prepare_ping_monitor():
+    from ping_utils import ping_monitoring
+    ping_monitoring()
+
 def main():
+
     commands = {
         "clear": clear_cmd,
         "exit": exit_cmd,
@@ -171,12 +216,16 @@ def main():
         "fg red": fgred_cmd,
         "fg white": fgwhite_cmd,
         "fg": onlyfgarg,
-        "ping number": try_ping_number_cmd,
-        "ping ip": try_ping_ip,
-        "ping latlon": try_ping_ll,
-        "ping btc": try_ping_btc,
-        "ping ton": try_ping_ton,
-        "ping": onlypingarg
+        "ping number": prepare_ping_number,
+        "ping ip": prepare_ip,
+        "ping latlon": prepare_ll,
+        "ping btc": prepare_btc,
+        "ping ton": prepare_ton,
+        "ping faker": prepare_ping_faker,
+        "ping qrcode": prepare_ping_qrcode,
+        "ping ctypes": prepare_ping_ctypes,
+        "ping monitoring": prepare_ping_monitor,
+        "ping": prepare_onlypingarg
     }
 
 

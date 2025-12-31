@@ -38,7 +38,7 @@ def troll_start():
             keyboard.press(Key.enter)
             keyboard.release(Key.enter)
             i += 1
-            time.sleep(0.5)
+            time.sleep(getspeed)
 
 
 def troll_start_thread():
@@ -62,11 +62,15 @@ def troll_start_thread():
 def troll_stop():
     root.destroy()
 
+
+
 main_frame = ctk.CTkFrame(root)
 main_frame.pack()
+
 label_main = ctk.CTkLabel(root, text="скрипт начнет работать\nспустя 5 секунд после запуска").pack()
 
 switch_var = ctk.StringVar(value="off")
 main_button = ctk.CTkSwitch(main_frame, text="start", command=troll_start_thread, variable=switch_var, onvalue="on", offvalue="off").pack(side="left", padx=10)
 stop_button = ctk.CTkButton(main_frame, text="exit", command=troll_stop).pack(side="left")
+
 root.mainloop()

@@ -31,7 +31,7 @@ def select_ton(frame):
             wrap="word"
         )
         copyable.pack(padx=20, pady=20)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[TON]{Style.NORMAL} {Fore.LIGHTGREEN_EX}TON currency was shown")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} TON currency: {Fore.LIGHTGREEN_EX}was shown")
 
         url = "https://api.coinpaprika.com/v1/tickers/toncoin-the-open-network?quotes=USD,RUB"
         response = requests.get(url, headers={"User-Agent": "TkinterApp"})
@@ -55,7 +55,7 @@ def select_ton(frame):
         copyable.configure(cursor="arrow")
 
     except Exception as error_ton:
-        print(f"{Fore.BLUE}{Style.BRIGHT}[TON]{Style.NORMAL} {Fore.RED}TON ERROR\napi недоступно\n{error_ton}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RED} TON ERROR\napi недоступно\n{error_ton}")
 
 def select_btc(frame):
     try:
@@ -73,7 +73,7 @@ def select_btc(frame):
             wrap="word"
         )
         copyable.pack(padx=20, pady=20)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[BTC]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BTC currency was shown")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} BTC currency: {Fore.LIGHTGREEN_EX}was shown")
 
         url = "https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=USD,RUB"
         response = requests.get(url, headers={"User-Agent": "TkinterApp"})
@@ -97,16 +97,20 @@ def select_btc(frame):
         copyable.configure(cursor="arrow")
 
     except Exception as error_btc:
-        print(f"{Fore.BLUE}{Style.BRIGHT}[BTC]{Style.NORMAL} {Fore.RED}BTC ERROR\napi недоступно\n{error_btc}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RED} BTC ERROR\napi недоступно\n{error_btc}")
 
 def api_ip(entry_widgets, label_widgets, frame):
     user_input = entry_widgets.get().strip()
-
     label_widgets.pack_forget()
+
+    for widget in frame.pack_slaves():
+        if isinstance(widget, ctk.CTkTextbox):
+            widget.destroy()
+
     if not user_input:
-        label_widgets.configure(text="Введите ip!", text_color="red")
+        label_widgets.configure(text="Введите IP", text_color="red")
         label_widgets.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[IP]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}IP не был введен")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} IP: {Fore.LIGHTYELLOW_EX}was not entered")
         return
 
     try:
@@ -124,6 +128,9 @@ def api_ip(entry_widgets, label_widgets, frame):
         response = requests.get(f"https://ipwhois.app/json/{user_input}")
         data = response.json()
 
+        if data.get("message"):
+            copyable.insert("1.0", f"{data.get('message', 'Ошибка')}")
+            return
 
         text = (
             f"IP: {data.get('ip', 'не найдено')}\n"
@@ -154,20 +161,25 @@ def api_ip(entry_widgets, label_widgets, frame):
 
         copyable.insert("1.0", text)
         copyable.configure(state="normal")
-        print(f"{Fore.BLUE}{Style.BRIGHT}[IP]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Запрос выполнен: {user_input}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} IP: {Fore.MAGENTA}{user_input}{Fore.RESET} | {Fore.LIGHTGREEN_EX}True")
 
     except Exception as er:
         label_widgets.configure(text=f"Ошибка API-IP: {er}", text_color="red")
         label_widgets.pack()
-        print(f"{Fore.BLUE}{Style.BRIGHT}[IP]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка API-IP: {er}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API] {Fore.LIGHTRED_EX}Ошибка API-IP: {er}")
 
 def api_lat(entry_widgets, label_widgets, frame):
     user_input = entry_widgets.get().strip()
     label_widgets.pack_forget()
+
+    for widget in frame.pack_slaves():
+        if isinstance(widget, ctk.CTkTextbox):
+            widget.destroy()
+
     if not user_input:
         label_widgets.configure(text="Введите координаты (lat lon)", text_color="red")
         label_widgets.pack(pady=5)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[LatLon]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}Координаты не были введены.")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} GEO: {Fore.LIGHTYELLOW_EX}was not entered")
         return
 
     try:
@@ -176,7 +188,7 @@ def api_lat(entry_widgets, label_widgets, frame):
         if len(parts) != 2:
             label_widgets.configure(text="Введите два значения: широта и долгота через пробел", text_color="red")
             label_widgets.pack(pady=5)
-            print(f"{Fore.BLUE}{Style.BRIGHT}[LatLon]{Style.NORMAL} {Fore.LIGHTYELLOW_EX}Координаты были введены неправильно.")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Style.NORMAL} GEO: {Fore.LIGHTYELLOW_EX}were entered incorrectly")
             return
 
         lat, lon = parts
@@ -195,6 +207,10 @@ def api_lat(entry_widgets, label_widgets, frame):
         url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}"
         response = requests.get(url, headers={"User-Agent": "TkinterApp"})
         data = response.json()
+
+        if data.get('error'):
+            copyable.insert("1.0", f"{data.get('error', 'Ошибка')}")
+            return
 
         text = (
             f"Страна: {data.get('address', {}).get('country', 'не найдено')}\n"
@@ -219,10 +235,10 @@ def api_lat(entry_widgets, label_widgets, frame):
         copyable.insert("1.0", text)
         copyable.configure(state="normal")
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[LatLon]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Запрос был выполнен: {parts}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API]{Fore.RESET} GEO: {Fore.MAGENTA}{lat} {lon}{Fore.RESET} | {Fore.LIGHTGREEN_EX} True")
 
     except Exception as er:
         label_widgets.configure(text=f"Ошибка API-lat: {er}", text_color="red")
         label_widgets.pack()
-        print(f"{Fore.BLUE}{Style.BRIGHT}[LatLon]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка API-lat: {er}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[API] {Fore.LIGHTRED_EX}Ошибка API-lat: {er}")
 

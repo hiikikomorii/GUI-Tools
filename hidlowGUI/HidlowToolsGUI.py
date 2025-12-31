@@ -41,39 +41,46 @@ root.after(0, lambda:root.state('zoomed'))
 root.title("HidlowTools-GUI-V2")
 
 
-# utils
+# number api util
 def select_api1():
     from files.number_api_util import api_number
     clear_entry_frame()
     prepare_input(lambda: api_number(entry, output_label, entry_frame))
 
+# ip api util
 def select_api2():
     from files.main_api_utils import api_ip
     clear_entry_frame()
     prepare_input(lambda: api_ip(entry, output_label, entry_frame))
 
+# geo api util
 def select_api3():
     from files.main_api_utils import api_lat
     clear_entry_frame()
     prepare_input(lambda: api_lat(entry, output_label, entry_frame))
 
+#prepare spawn currency-frame
 def select_currency():
     prepare_hide()
     currency_frame.pack(pady=10)
 
+#prepare util
 def ton_pr():
     from files.main_api_utils import select_ton
     select_ton(currency_frame)
+
+#prepare util
 def btc_pr():
     from files.main_api_utils import select_btc
     select_btc(currency_frame)
 
+#prepare util
 def select_gptchc():
     from files.none_textbox_utils import gpthch, extract_chat
     clear_entry_frame()
     prepare_input(lambda: gpthch(entry, output_label))
 
-
+# prepare spawn faker-frame
 def select_faker():
     prepare_hide()
     faker_frame.pack(pady=10)
@@ -109,24 +116,18 @@ def faker_jp_pr():
             widget.destroy()
     faker_jp(faker_frame)
 
-
+#prepare util
 def select_qrcode():
-    try:
-        from files.none_textbox_utils import qrcodee
-
-    except ModuleNotFoundError as no_md_qr:
-        if no_md_qr.name == "files.none_textbox_utils":
-            ctypes.windll.user32.MessageBoxW(0, f"Ошибка запуска функции Qrcode\n{no_md_qr}\nПроверьте совместимость сборки", "HidlowToolsGUI", 0x10)
-            sys.exit()
-        nomodule_boottraper()
+    from files.none_textbox_utils import qrcodee
     prepare_input(lambda: qrcodee(entry, output_label))
 
+#prepare util
 def select_notify():
     from files.none_textbox_utils import ctypes_notify
     prepare_hide()
     prepare_input(lambda: ctypes_notify(entry, output_label))
 
-
+#prepare monitoring util
 def select_monitor():
     from files.monitoring_util import monitoring_start
     prepare_hide()
@@ -154,7 +155,7 @@ def trol():
 
     try:
         if check_path.exists():
-            print(f"{Fore.BLUE}{Style.BRIGHT}[TROLL]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Troll was opened")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} {Fore.MAGENTA}TrollGidlowGUI{Fore.RESET} | {Fore.LIGHTGREEN_EX}was opened")
             script_dir = Path(__file__).parent / "files" / "troll"
             script_file = script_dir / "trollhidlowGUI.py"
 
@@ -174,7 +175,7 @@ def hidlowapi_cmd():
 
     try:
         if check_path.exists():
-            print(f"{Fore.BLUE}{Style.BRIGHT}[API Server]{Style.NORMAL} {Fore.LIGHTGREEN_EX}Server was enabled")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[API Server]{Fore.RESET} {Fore.MAGENTA}HidlowAPI{Fore.RESET} | {Fore.LIGHTGREEN_EX}was enabled")
             script_dir = Path(__file__).parent / "files"
             script_file = script_dir / "hidlowAPI.py"
 
@@ -194,7 +195,7 @@ def consoleadapter():
     try:
         check_path_debug = Path(r"files\consoledebug\debugconsole.py")
         if check_path_debug.exists():
-            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}CMD is available")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} {Fore.MAGENTA}Debugconsole{Fore.RESET} | {Fore.LIGHTGREEN_EX}was opened")
             script_dir = Path(__file__).parent / "files" / "consoledebug"
             script_file = script_dir / "debugconsole.py"
             subprocess.Popen(
@@ -203,18 +204,20 @@ def consoleadapter():
                 creationflags=subprocess.CREATE_NEW_CONSOLE
             )
         else:
-            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM] {Fore.RED}CMD is not available\n")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM] {Fore.RED}Debugconsole is not available\n")
             ctypes.windll.user32.MessageBoxW(0, f"Сборка повреждена\nКонсоль недоступна\nПроверьте совместимость сборки", "debug-console", 0x10)
     except Exception as error_prepare_console:
         print(error_prepare_console)
 
-# about
 
 #prepare about
 def select_about():
     prepare_hide()
     about_frame.pack(pady=10)
+    about_project()
     aboutback_button.configure(command=lambda: go_back(about_frame))
+
+# о проекте
 def about_project():
     for widget in about_frame.pack_slaves():
         if isinstance(widget, ctk.CTkTextbox):
@@ -222,28 +225,27 @@ def about_project():
 
     copyable = ctk.CTkTextbox(
         about_frame,
-        width=600,
-        height=800,
+        width=700,
+        height=700,
         fg_color="black",
         text_color="white",
         font=("Arial", 14),
         wrap="word"
     )
     copyable.pack(padx=20, pady=20)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[ABOUT: project]{Style.NORMAL} {Fore.LIGHTGREEN_EX}about was shown")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[INFO]{Fore.RESET} {Fore.MAGENTA}About project{Fore.RESET} | {Fore.LIGHTGREEN_EX}was shown")
     text = f"""
     number - показывает информацию о введенном номере\n
     ip - показывает информацию о введенном ip\n
     lat/lon - показывает информаю по введенной долготе(lat) и широте(lon)\n
     qrcode - создает qrcode.png которая содержит вашу ссылку\n
-    troll - отдельный скрипт который троллится за вас используя pr.txt\n
+    troll - отдельный скрипт который троллится за вас используя text.txt\n
     currency - выводит курс о BTC и TON в $ & ₽\n
-    GPT CHC - Gpt chat history converter.\n
-    - вытаскивает .json файл и переводит его в .txt для чтения\n
+    GPT CHC - Gpt chat history converter вытаскивает .json файл,
+    затем переводит его в .txt для чтения\n
     Faker - генерирует фейк данные.\n
-    API - маленький API сервер на Flask.
-    доступные домены: /home, /home/ip=(запрос), home/phone=<запрос>
-    /home/lat=<запрос1>&lon=<запрос2>\n
+    API - маленький API сервер на Flask
+    документация: https://github.com/hiikikomorii/API-Server\n
     Window notif - создает windows-уведомление: название окна, значок, текст
     пример: [window] [error] [text in window]
     доступные значки: info, warning, error, question\n
@@ -251,57 +253,28 @@ def about_project():
     \n
     background имеет 2 фона: Light и Dark\n
     fullscreen меняет размер окна из полноэкранного режима в 1146x542\n
-    console - с помощью нее вы можете работать с консолью. команды в 'about console'\n\n
-    Версия: BETA backend refactor\n"""
+    debug - консоль отладки показывает информацию о системе и используется
+    для проверки на правильную работу утилит\n
+    Версия: https://github.com/hiikikomorii/hidlowToolsGUI/blob/main/documentation/CHANGELOG.md\n"""
 
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
     copyable.configure(cursor="arrow")
 
 
-def consoleabout():
-    for widget in about_frame.pack_slaves():
-        if isinstance(widget, ctk.CTkTextbox):
-            widget.destroy()
-
-    copyable = ctk.CTkTextbox(
-        about_frame,
-        width=400,
-        height=400,
-        fg_color="black",
-        text_color="white",
-        font=("Arial", 14),
-        wrap="word"
-    )
-    copyable.pack(padx=20, pady=20)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[ABOUT: console]{Style.NORMAL} {Fore.LIGHTGREEN_EX}project stats was shown")
-
-    text = f"""
-    доступные команды:\n
-    clear - очистка консоли\n
-    info - детальная информация о системе и python\n
-    myip - ваш локальный ip\n
-    help - список команд\n
-    time - актуальная дата и время\n
-    reboot - перезапускает GUI\n
-    fg [color] - меняет цвет тега на введенный в [color]
-    доступные цвета: red, blue, cyan, white.
-    пример: fg red\n
-    ping [func] - проверяет работоспособность API
-    доступные функции: number, latlon, ip, btc, ton
-    """
-    copyable.insert("1.0", text)
-    copyable.bind("<Key>", lambda s: "break")
-    copyable.configure(cursor="arrow")
-
-#это настройки
+# эти 2 блока с припиской _settings показывают\скрывают настройки
 def toggle_settings():
     if settings_frame.winfo_ismapped():
         settings_frame.pack_forget()
     else:
         settings_frame.pack(padx=1, pady=1)
 
+def hide_settings():
+    if settings_frame.winfo_ismapped():
+        settings_frame.pack_forget()
+
 def toggle_fullscreen():
+    # включает\выключает полноэкранный режим
     global fullscreen
     global bg_state
     fullscreen = not fullscreen
@@ -312,34 +285,47 @@ def toggle_fullscreen():
         root.state("normal")
         root.geometry("1146x542")
         btn1.configure(text_color="#CF0000")
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}RootGeometry '1280x720'")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} RootGeometry '{Fore.MAGENTA}1146x542{Fore.RESET}'")
     else:
         root.state('zoomed')
         root.attributes("-fullscreen", True)
-        if bg_state == 1:
-            btn1.configure(text_color="#005E00")
-        else:
-            btn1.configure(text_color="#00CF00")
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}RootGeometry 'fullscreen'")
+        btn1.configure(text_color="#00CF00")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} RootGeometry '{Fore.MAGENTA}Fullscreen{Fore.RESET}'")
 
 def open_folder():
+    # открывает директорию где находится HidlowToolsGUI.py
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         os.startfile(current_dir)
-        print(f"{Fore.BLUE}{Style.BRIGHT}[FOLDER]{Style.NORMAL} {Fore.LIGHTGREEN_EX}директория 'HidlowGUI' успешно открыта")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} Directory '{Fore.MAGENTA}{__file__}{Fore.RESET}' | {Fore.LIGHTGREEN_EX}was opened")
 
     except Exception as error_folder:
-        btn3.configure(text_color="#FF0000")
-        print(f"{Fore.BLUE}{Style.BRIGHT}[FOLDER]{Style.NORMAL} {Fore.RED}Произошла ошибка при открытии 'folder'\n{error_folder}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} {Fore.RED}Произошла ошибка при открытии '{__file__}'\n{error_folder}")
 
+def clear_cache():
+    # очистка pycache
+    import shutil
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    found_cache = False
+
+    for wroot, dirs, files in os.walk(root_dir):
+        if '__pycache__' in dirs:
+            cache_path = os.path.join(wroot, '__pycache__')
+            shutil.rmtree(cache_path)
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} Has been cleared: {Fore.MAGENTA}{cache_path}")
+            found_cache = True
+    if not found_cache:
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} Cache not found")
 
 def exitt():
-    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.RED}Выход из программы")
+    # выход
+    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} {Fore.LIGHTRED_EX}exiting{Fore.RESET} the program")
     sys.exit()
 
 
 def menu_reboot():
-    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.RED}restart GUI..")
+    # перезагрузка скрипта
+    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} restart GUI..")
     script_path = os.path.abspath(__file__)
     subprocess.Popen(
         ["cmd", "/k", sys.executable, str(script_path)],
@@ -350,6 +336,7 @@ def menu_reboot():
 
 
 def go_back_from_entry():
+    # выход из entry-фрейма в главное меню
     entry_frame.pack_forget()
     for widget in root.winfo_children():
         if isinstance(widget, ctk.CTkLabel):
@@ -358,6 +345,7 @@ def go_back_from_entry():
     menu_frame2.pack(pady=20)
 
 def go_back_monitoring():
+    # выход из утилиты monitoring в главное меню
     monitor_frame_stat.pack_forget()
     label_info_monitor.pack_forget()
     monitor_frame.pack_forget()
@@ -365,6 +353,7 @@ def go_back_monitoring():
     menu_frame2.pack(pady=20)
 
 def go_back(hide_frame):
+    # основная функция выхода в главное меню
     hide_frame.pack_forget()
     for widget in root.winfo_children():
         if isinstance(widget, ctk.CTkLabel):
@@ -372,31 +361,26 @@ def go_back(hide_frame):
     menu_frame.pack(pady=20)
     menu_frame2.pack(pady=20)
 
-def hide_settings():
-    if settings_frame.winfo_ismapped():
-        settings_frame.pack_forget()
-
 def clear_entry_frame():
+    # очиста ввода
     entry.delete(0, "end")
     for widget in entry_frame.winfo_children():
         if isinstance(widget, ctk.CTkTextbox):
             widget.destroy()
 
 
-# переменные фона
-# 1-black 2-white 3-blue 4-red 5-magenta
+
 btn2 = None
 exit_buttons = None
 reboot_buttons = None
 
 try:
+    # загрузка файлов из assets/
     exit_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/exit_assets/exitbutton{i}.png").resize((27, 27)), size=(27, 27))for i in range(1, 3)]
     reboot_buttons = [ctk.CTkImage(light_image=Image.open(f"assets/reboot_assets/rebootbutton{i}.png").resize((25, 25)), size=(25, 25)) for i in range(1, 3)]
 
 except Exception as b:
-    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка Background : {b}")
-    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Bg отсутствует в сборке")
-    btn2.configure(text_color="red")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} {Fore.LIGHTRED_EX}Error: {b}")
 
 bg_state = 1
 
@@ -409,7 +393,7 @@ def change_background():
         exitadapter_button.configure(image=exit_buttons[1])
         rebootbutton_button.configure(image=reboot_buttons[1])
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg2.jpg'{Fore.RESET} | {Style.BRIGHT}WHITE")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} Apperance mode | {Style.BRIGHT}{Fore.LIGHTWHITE_EX}LIGHT")
 
         try:
             for frame in (menu_frame, menu_frame2, settings_frame, about_frame, currency_frame, entry_frame, faker_frame, monitor_frame, monitor_frame_stat):
@@ -427,15 +411,16 @@ def change_background():
 
             ctk.set_appearance_mode("Light")
         except Exception as a:
-            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.LIGHTRED_EX}error light mode: {a}")
 
         bg_state = 2
 
     else:
+        # black
         exitadapter_button.configure(image=exit_buttons[0])
         rebootbutton_button.configure(image=reboot_buttons[0])
 
-        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTGREEN_EX}BackGround изменен на 'bg1.jpg'{Fore.RESET} | {Style.BRIGHT}{Fore.LIGHTBLACK_EX}BLACK")
+        print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.RESET} Apperance mode | {Fore.LIGHTBLACK_EX}BLACK")
 
         try:
             for frame in (menu_frame, menu_frame2, settings_frame, about_frame, currency_frame, entry_frame, faker_frame, monitor_frame, monitor_frame_stat):
@@ -454,14 +439,11 @@ def change_background():
             ctk.set_appearance_mode("Dark")
 
         except Exception as a:
-            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Style.NORMAL} {Fore.LIGHTRED_EX}Ошибка background: {a}")
-
-
-
-
+            print(f"{Fore.BLUE}{Style.BRIGHT}[SYSTEM]{Fore.LIGHTRED_EX}Ошибка background: {a}")
         bg_state = 1
 
     try:
+        # check fullscreen color
         if fullscreen:
             btn1.configure(text_color="#CF0000")
         else:
@@ -470,7 +452,7 @@ def change_background():
             else:
                 btn1.configure(text_color="#005E00")
     except Exception as error_fg_fullscreen:
-        print(f"Ошибка цвета fullscreen кнопки: {error_fg_fullscreen}")
+        print(f"{Fore.RED}error check fullscreen color: \n{error_fg_fullscreen}")
 
 
 # главное меню
@@ -518,8 +500,9 @@ settings_button = ctk.CTkButton(menu_frame2, text="Settings", text_color="white"
 btn1 = ctk.CTkButton(settings_frame, text="Fullscreen", text_color="#00CF00", width=85, corner_radius=10, command=toggle_fullscreen)
 btn1.pack(pady=2)
 btn2 = ctk.CTkButton(settings_frame, text="Theme", text_color="white", width=90, corner_radius=10, command=change_background).pack(pady=3)
-btn3 = ctk.CTkButton(settings_frame, text="Folder", text_color="white", width=90, corner_radius=10, command=open_folder).pack(pady=3)
-btn4 = ctk.CTkButton(settings_frame, text="Console", text_color="white", width=90, corner_radius=10, command=consoleadapter).pack(pady=3)
+btn3 = ctk.CTkButton(settings_frame, text="Clear cache", text_color="white", width=90, corner_radius=10, command=clear_cache).pack(pady=3)
+btn4 = ctk.CTkButton(settings_frame, text="Folder", text_color="white", width=90, corner_radius=10, command=open_folder).pack(pady=3)
+btn5 = ctk.CTkButton(settings_frame, text="Debug", text_color="white", width=90, corner_radius=10, command=consoleadapter).pack(pady=3)
 
 
 #custom buttons exit & reboot
@@ -538,8 +521,6 @@ back_button = ctk.CTkButton(entry_frame, text="Back", text_color="red", width=50
 back_button.pack(pady=1)
 
 #back about & info
-abot_button = ctk.CTkButton(about_frame, text="about project", text_color="white", width=10, command=about_project).pack(pady=5)
-aboutconsole_button = ctk.CTkButton(about_frame, text="about console", text_color="white", width=10, command=consoleabout).pack(pady=5)
 aboutback_button = ctk.CTkButton(about_frame, text="Back", text_color="red", width=10, command=lambda: go_back(about_frame))
 aboutback_button.pack(pady=5)
 

@@ -29,28 +29,19 @@ def faker_ru(frame):
         wrap="word"
     )
     copyable.pack(padx=20, pady=20)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER: RU]{Style.NORMAL} {Fore.LIGHTGREEN_EX}fake information was shown")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER]{Fore.RESET} {Fore.MAGENTA}Russian{Fore.RESET}:  Fake information  | {Fore.LIGHTGREEN_EX}was shown")
 
     fake = Faker('Ru_ru')
 
-    ipv4f = fake.ipv4()
-    addressf = fake.address()
-    namef = fake.name()
-    phonef = fake.phone_number()
-    emailf = fake.email()
-    ssnf = fake.ssn()
-    cityf = fake.city()
-    passwf = fake.password()
-
     text = f"""
-    name: {namef}\n
-    address: {addressf}\n
-    city: {cityf}\n
-    phone number: {phonef}\n
-    email: {emailf}\n
-    ssn: {ssnf}\n
-    password: {passwf}\n
-    ip: {ipv4f}\n
+    name: {fake.name()}\n
+    address: {fake.address()}\n
+    city: {fake.city()}\n
+    phone number: {fake.phone_number()}\n
+    email: {fake.email()}\n
+    ssn: {fake.ssn()}\n
+    password: {fake.password()}\n
+    ip: {fake.ipv4()}\n
     """
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
@@ -71,28 +62,19 @@ def faker_eng(frame):
         wrap="word"
     )
     copyable.pack(padx=20, pady=20)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER: ENG]{Style.NORMAL} {Fore.LIGHTGREEN_EX}fake information was shown")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER]{Fore.RESET} {Fore.MAGENTA}English{Fore.RESET}:  Fake information  | {Fore.LIGHTGREEN_EX}was shown")
 
     fake = Faker()
 
-    ipv4f = fake.ipv4()
-    addressf = fake.address()
-    namef = fake.name()
-    phonef = fake.phone_number()
-    emailf = fake.email()
-    ssnf = fake.ssn()
-    cityf = fake.city()
-    passwf = fake.password()
-
     text = f"""
-    name: {namef}\n
-    address: {addressf}\n
-    city: {cityf}\n
-    phone number: {phonef}\n
-    email: {emailf}\n
-    ssn: {ssnf}\n
-    password: {passwf}\n
-    ip: {ipv4f}\n
+    name: {fake.name()}\n
+    address: {fake.address()}\n
+    city: {fake.city()}\n
+    phone number: {fake.phone_number()}\n
+    email: {fake.email()}\n
+    ssn: {fake.ssn()}\n
+    password: {fake.password()}\n
+    ip: {fake.ipv4()}\n
     """
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
@@ -113,28 +95,19 @@ def faker_es(frame):
         wrap="word"
     )
     copyable.pack(padx=20, pady=20)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER: ES]{Style.NORMAL} {Fore.LIGHTGREEN_EX}fake information was shown")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER]{Fore.RESET} {Fore.MAGENTA}Spanish{Fore.RESET}:  Fake information  | {Fore.LIGHTGREEN_EX}was shown")
 
     fake = Faker('es_ES')
 
-    ipv4f = fake.ipv4()
-    addressf = fake.address()
-    namef = fake.name()
-    phonef = fake.phone_number()
-    emailf = fake.email()
-    ssnf = fake.ssn()
-    cityf = fake.city()
-    passwf = fake.password()
-
     text = f"""
-    name: {namef}\n
-    address: {addressf}\n
-    city: {cityf}\n
-    phone number: {phonef}\n
-    email: {emailf}\n
-    ssn: {ssnf}\n
-    password: {passwf}\n
-    ip: {ipv4f}\n
+    name: {fake.name()}\n
+    address: {fake.address()}\n
+    city: {fake.city()}\n
+    phone number: {fake.phone_number()}\n
+    email: {fake.email()}\n
+    ssn: {fake.ssn()}\n
+    password: {fake.password()}\n
+    ip: {fake.ipv4()}\n
     """
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
@@ -155,28 +128,19 @@ def faker_jp(frame):
         wrap="word"
     )
     copyable.pack(padx=20, pady=20)
-    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER: JP]{Style.NORMAL} {Fore.LIGHTGREEN_EX}fake information was shown")
+    print(f"{Fore.BLUE}{Style.BRIGHT}[FAKER]{Fore.RESET} {Fore.MAGENTA}Japanese{Fore.RESET}: Fake information  | {Fore.LIGHTGREEN_EX}was shown")
 
     fake = Faker('ja_JP')
 
-    ipv4f = fake.ipv4()
-    addressf = fake.address()
-    namef = fake.name()
-    phonef = fake.phone_number()
-    emailf = fake.email()
-    ssnf = fake.ssn()
-    cityf = fake.city()
-    passwf = fake.password()
-
     text = f"""
-    name: {namef}\n
-    address: {addressf}\n
-    city: {cityf}\n
-    phone number: {phonef}\n
-    email: {emailf}\n
-    ssn: {ssnf}\n
-    password: {passwf}\n
-    ip: {ipv4f}\n
+    name: {fake.name()}\n
+    address: {fake.address()}\n
+    city: {fake.city()}\n
+    phone number: {fake.phone_number()}\n
+    email: {fake.email()}\n
+    ssn: {fake.ssn()}\n
+    password: {fake.password()}\n
+    ip: {fake.ipv4()}\n
     """
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
