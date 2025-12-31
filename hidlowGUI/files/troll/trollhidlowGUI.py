@@ -38,7 +38,7 @@ def troll_start():
             keyboard.press(Key.enter)
             keyboard.release(Key.enter)
             i += 1
-            time.sleep(getspeed)
+            time.sleep(0.5)
 
 
 def troll_start_thread():
