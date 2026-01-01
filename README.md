@@ -2,7 +2,10 @@
 ***
 [Документация](documentation/DOCS.md) | [Обновления](documentation/CHANGELOG.md)
 ***
-**С новым 2026 годом!**
+## Контакты 
+
+**telegram: [click](https://t.me/howoox)**
+
 
 
 
