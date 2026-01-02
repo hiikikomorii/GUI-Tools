@@ -4,7 +4,8 @@
 ***
 ## Контакты 
 
-**telegram: [click](https://t.me/howoox)**
+**Telegram: [click](https://t.me/howoox)**
+
 
 
 
