@@ -242,3 +242,91 @@ def api_lat(entry_widgets, label_widgets, frame):
         label_widgets.pack()
         print(f"{Fore.BLUE}{Style.BRIGHT}[API] {Fore.LIGHTRED_EX}Ошибка API-lat: {er}")
 
+
+def example_test():
+    root = ctk.CTk()
+
+    def prepare_btc():
+        main_frame.pack_forget()
+        currency_frame.pack()
+        select_btc(currency_frame)
+        go_back_currency.pack(pady=10)
+
+    def prepare_ton():
+        main_frame.pack_forget()
+        currency_frame.pack()
+        select_ton(currency_frame)
+        go_back_currency.pack(pady=10)
+
+    def prepare_input(api_func):
+        entry.delete(0, "end")
+        for widget in entry_frame.winfo_children():
+            if isinstance(widget, ctk.CTkTextbox):
+                widget.destroy()
+        main_frame.pack_forget()
+        entry_frame.pack(pady=10)
+        confirm_button.configure(command=api_func)
+
+
+    def go_back_from_entry():
+        label.destroy()
+        entry_frame.pack_forget()
+        example_ip_button.pack_forget()
+        example_geo_button.pack_forget()
+        main_frame.pack()
+
+    entry_frame = ctk.CTkFrame(root, width=200, height=30, fg_color="#242424")
+    entry = ctk.CTkEntry(entry_frame)
+    entry.pack(pady=5)
+    confirm_button = ctk.CTkButton(entry_frame, text="OK", text_color="#00CF00", width=80)
+    confirm_button.pack(pady=5)
+    back_button = ctk.CTkButton(entry_frame, text="Back", text_color="red", width=80, command=go_back_from_entry)
+    back_button.pack()
+
+    def go_back_from_currency():
+        currency_frame.pack_forget()
+        main_frame.pack()
+        label.destroy()
+
+    # main
+    label = ctk.CTkLabel(root, fg_color="#242424")
+
+    currency_frame = ctk.CTkFrame(root, fg_color="#242424")
+
+
+    main_frame = ctk.CTkFrame(root, fg_color="#242424")
+    main_frame.pack(pady=10)
+
+    def prepare_geo():
+        prepare_input(lambda: api_lat(entry, label, entry_frame))
+        example_geo_button.pack(pady=5)
+
+    def prepare_ip():
+        prepare_input(lambda: api_ip(entry, label, entry_frame))
+        example_ip_button.pack(pady=5)
+
+    button1 = ctk.CTkButton(main_frame, text="Geo", width=50, corner_radius=10, command=prepare_geo)
+    button1.pack( side="left", padx=5)
+
+    button2 = ctk.CTkButton(main_frame, text="IP", width=50, corner_radius=10, command=prepare_ip)
+    button2.pack(side="left", padx=5)
+
+    button3 = ctk.CTkButton(main_frame, text="BTC", width=50, corner_radius=10, command=prepare_btc)
+    button3.pack(side="left", padx=5)
+
+    button4 = ctk.CTkButton(main_frame, text="TON", width=50, corner_radius=10, command=prepare_ton)
+    button4.pack(side="left", padx=5)
+
+    example_geo_button = ctk.CTkButton(entry_frame, text="example", width=80, command=lambda: entry.insert(0, "55.7342 37.6129"))
+    example_geo_button.pack_forget()
+
+    example_ip_button = ctk.CTkButton(entry_frame, text="example", width=80, command=lambda: entry.insert(0, "51.15.84.185"))
+    example_ip_button.pack_forget()
+
+    go_back_currency = ctk.CTkButton(currency_frame, text="back", command=go_back_from_currency)
+    go_back_currency.pack()
+
+    root.mainloop()
+
+if __name__ == '__main__':
+    example_test()

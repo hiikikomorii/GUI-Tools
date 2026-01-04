@@ -17,33 +17,21 @@ except ModuleNotFoundError:
 
 init(autoreset=True)
 def monitoring_start(label_mon_m, label_mem_m, label_cpu_m, label_info_monitor_m):
-    sys1 = platform.node()
-    sys2 = platform.platform()
-    sys3 = platform.machine()
-    sys4 = platform.processor()
-    sys5 = psutil.cpu_count()
-    sys6 = psutil.cpu_percent(interval=1)
-    os1 = os.getpid()
     win = gw.getActiveWindow()
-    path_mon = __file__
 
-    syspy1 = platform.python_version()
-    syspy2 = platform.python_build()
-    syspy3 = platform.python_compiler()
-
-    label_info_monitor_m.configure(text=f"Name: {sys1}\n\n"
-                                      f"OS: {sys2}\n\n"
-                                      f"Machine: {sys3}\n\n"
-                                      f"processor:  {sys4}\n\n"
-                                      f"CPU count:  {sys5}\n\n"
-                                      f"CPU usage: {sys6}\n\n"
-                                      f"Py version:  {syspy1}\n\n"
-                                      f"Py build:  {syspy2}\n\n"
-                                      f"Py compiler:  {syspy3}\n\n"
-                                      f"Script PID: {os1}\n\n"
+    label_info_monitor_m.configure(text=f"Name: {platform.node()}\n\n"
+                                      f"OS: {platform.platform()}\n\n"
+                                      f"Machine: {platform.machine()}\n\n"
+                                      f"processor:  {platform.processor()}\n\n"
+                                      f"CPU count:  {psutil.cpu_count()}\n\n"
+                                      f"CPU usage: {psutil.cpu_percent(interval=1)}\n\n"
+                                      f"Py version:  {platform.python_version()}\n\n"
+                                      f"Py build:  {platform.python_build()}\n\n"
+                                      f"Py compiler:  {platform.python_compiler()}\n\n"
+                                      f"Script PID: {os.getpid()}\n\n"
                                       f"Window: {win.width}x{win.height}\n\n"
-                                      f"Path: {path_mon}")
-    label_info_monitor_m.pack(pady=5)
+                                      f"Path: {__file__}")
+    label_info_monitor_m.pack(padx=5)
     print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} MONITORING: {Fore.MAGENTA}Monitoring{Fore.RESET} | {Fore.LIGHTGREEN_EX}was enabled")
     while True:
         try:
@@ -63,3 +51,21 @@ def monitoring_start(label_mon_m, label_mem_m, label_cpu_m, label_info_monitor_m
 
         except RuntimeError:
             return
+def example_test():
+    import customtkinter as ctk
+    import threading as thr
+    root = ctk.CTk()
+
+    monitor_frame = ctk.CTkFrame(root, fg_color="#242424")
+    monitor_frame.pack(pady=20, anchor="n")
+    monitor_frame_stat = ctk.CTkFrame(root, fg_color="#242424")
+    monitor_frame_stat.pack(pady=10, anchor="sw", side="left")
+    label_mon = ctk.CTkLabel(monitor_frame, font=("Arial", 30))
+    label_mem = ctk.CTkLabel(monitor_frame, font=("Arial", 30))
+    label_cpu = ctk.CTkLabel(monitor_frame, font=("Arial", 30))
+    label_info_monitor = ctk.CTkLabel(monitor_frame_stat, font=("Arial", 20))
+
+    thr.Thread(target=lambda: monitoring_start(label_mon, label_mem, label_cpu, label_info_monitor),daemon=True).start()
+    root.mainloop()
+if __name__ == '__main__':
+ example_test()

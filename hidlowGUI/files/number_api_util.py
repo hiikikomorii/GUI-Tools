@@ -129,3 +129,33 @@ def api_number(entry_wd, label_wd, frame):
         label_wd.configure(text=f"Ошибка API: {er}", text_color="red")
         label_wd.pack()
         print(f"{Fore.BLUE}{Style.BRIGHT}[API] {Fore.LIGHTRED_EX}Ошибка API: {er}")
+
+def example_test():
+    root = ctk.CTk()
+    label = ctk.CTkLabel(root, fg_color="#242424")
+
+    def clear_entry():
+        entry.delete(0, "end")
+        for widget in entry_frame.winfo_children():
+            if isinstance(widget, ctk.CTkTextbox):
+                widget.destroy()
+
+    entry_frame = ctk.CTkFrame(root, fg_color="#242424")
+    entry_frame.pack()
+
+    entry = ctk.CTkEntry(entry_frame, fg_color="#242424")
+    entry.pack(pady=10)
+
+    accept_button = ctk.CTkButton(entry_frame, text="OK", text_color="#00CF00", width=70, command=lambda: api_number(entry, label, entry_frame))
+    accept_button.pack(pady=5)
+
+    clear_button = ctk.CTkButton(entry_frame, text="clear", text_color="white", width=70, command=clear_entry)
+    clear_button.pack()
+
+    example_button = ctk.CTkButton(entry_frame, text="example", text_color="white", width=70, command=lambda: entry.insert(0, "+79268471359"))
+    example_button.pack(pady=5)
+
+    root.mainloop()
+
+if __name__ == '__main__':
+    example_test()

@@ -120,7 +120,7 @@ def faker_jp(frame):
 
     copyable = ctk.CTkTextbox(
         frame,
-        width=600,
+        width=400,
         height=320,
         fg_color="black",
         text_color="white",
@@ -145,3 +145,62 @@ def faker_jp(frame):
     copyable.insert("1.0", text)
     copyable.bind("<Key>", lambda s: "break")
     copyable.configure(cursor="arrow")
+
+
+def example_test():
+    root = ctk.CTk()
+    main_frame = ctk.CTkFrame(root)
+    main_frame.pack()
+
+    example_faker_frame = ctk.CTkFrame(root)
+
+    def prepare_faker_ru():
+        main_frame.pack_forget()
+        example_faker_frame.pack()
+        faker_ru(example_faker_frame)
+
+    def prepare_faker_eng():
+        main_frame.pack_forget()
+        example_faker_frame.pack()
+        faker_eng(example_faker_frame)
+
+    def prepare_faker_es():
+        main_frame.pack_forget()
+        example_faker_frame.pack()
+        faker_es(example_faker_frame)
+
+    def prepare_faker_jp():
+        main_frame.pack_forget()
+        example_faker_frame.pack()
+        faker_jp(example_faker_frame)
+
+    def go_back():
+        for widget in example_faker_frame.pack_slaves():
+            if isinstance(widget, ctk.CTkTextbox):
+                widget.destroy()
+
+        example_faker_frame.pack_forget()
+        main_frame.pack()
+
+
+
+    btn_1 = ctk.CTkButton(main_frame, text="Russian", width=50, command=prepare_faker_ru)
+    btn_1.pack(side="left", padx=5)
+
+    btn_2 = ctk.CTkButton(main_frame, text="English", width=50, command=prepare_faker_eng)
+    btn_2.pack(side="left", padx=5)
+
+    btn_3 = ctk.CTkButton(main_frame, text="Spanish", width=50, command=prepare_faker_es)
+    btn_3.pack(side="left", padx=5)
+
+    btn_4 = ctk.CTkButton(main_frame, text="Japanese", width=50, command=prepare_faker_jp)
+    btn_4.pack(side="left", padx=5)
+
+    back_btn = ctk.CTkButton(example_faker_frame, text="back", text_color="red", width=50, command=go_back)
+    back_btn.pack(pady=5)
+
+    root.mainloop()
+
+
+if __name__ == '__main__':
+    example_test()

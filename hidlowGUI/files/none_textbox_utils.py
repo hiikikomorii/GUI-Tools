@@ -11,6 +11,7 @@ def nomodule_boottraper():
 
 try:
     from colorama import init, Fore, Style
+    import customtkinter as ctk
     import ctypes
 except ModuleNotFoundError:
     nomodule_boottraper()
@@ -156,3 +157,73 @@ def ctypes_notify(entry_widget, label_widget):
         label_widget.configure(text=f"error\n{error_ctypes}", text_color="red")
         label_widget.pack()
         print(f"{Fore.BLUE}{Style.BRIGHT}[UTILS]{Fore.RESET} CTYPES: {Fore.RED}error: \n{error_ctypes}")
+
+
+def example_test():
+    root = ctk.CTk()
+
+    main_frame = ctk.CTkFrame(root)
+    main_frame.pack(pady=5)
+
+    def prepare_input(api_func):
+        entry.delete(0, "end")
+        for widget in entry_frame.winfo_children():
+            if isinstance(widget, ctk.CTkTextbox):
+                widget.destroy()
+        main_frame.pack_forget()
+        entry_frame.pack(pady=10)
+        confirm_button.configure(command=api_func)
+
+
+    def prepare_qrcode():
+        prepare_input(lambda: qrcodee(entry, label))
+        example_notify_btn.pack_forget()
+        example_qrcode_btn.pack(pady=5)
+
+    def prepare_gptchc():
+        prepare_input(lambda: gpthch(entry, label))
+        example_notify_btn.pack_forget()
+        example_qrcode_btn.pack_forget()
+        back_button.pack()
+        label_gpt_example.pack(pady=5)
+
+
+    def prepare_notify():
+        prepare_input(lambda: ctypes_notify(entry, label))
+        example_qrcode_btn.pack_forget()
+        example_notify_btn.pack(pady=5)
+
+    def go_back_from_entry():
+        example_qrcode_btn.pack_forget()
+        example_notify_btn.pack_forget()
+        label.destroy()
+        label_gpt_example.pack_forget()
+        entry_frame.pack_forget()
+        main_frame.pack()
+
+    entry_frame = ctk.CTkFrame(root, width=200, height=30, fg_color="#242424")
+    entry = ctk.CTkEntry(entry_frame)
+    entry.pack(pady=5)
+    confirm_button = ctk.CTkButton(entry_frame, text="OK", text_color="#00CF00", width=80)
+    confirm_button.pack(pady=5)
+    back_button = ctk.CTkButton(entry_frame, text="Back", text_color="red", width=80, command=go_back_from_entry)
+    back_button.pack()
+
+    label = ctk.CTkLabel(root, fg_color="#242424")
+    text_gpt_example = "Поместите conversations.json из экспорта истории ChatGPT в папку /files/\nзатем в скрипте напишите точное название чата"
+    label_gpt_example = ctk.CTkLabel(root, text=text_gpt_example, fg_color="#242424")
+    button_qr = ctk.CTkButton(main_frame, text="qrcode", width=80, command=prepare_qrcode)
+    button_qr.pack(side="left", padx=5)
+
+    button_notify = ctk.CTkButton(main_frame, text="GPTCHC", width=80, command=prepare_gptchc)
+    button_notify.pack(side="left", padx=5)
+
+    button_gpt = ctk.CTkButton(main_frame, text="Notify", width=80, command=prepare_notify)
+    button_gpt.pack(side="left", padx=5)
+
+    example_qrcode_btn = ctk.CTkButton(entry_frame, text="example", width=80, command=lambda: entry.insert(0, "https://example.com"))
+    example_notify_btn = ctk.CTkButton(entry_frame, text="example", width=80, command=lambda: entry.insert(0, "title error text"))
+    root.mainloop()
+
+if __name__ == '__main__':
+    example_test()

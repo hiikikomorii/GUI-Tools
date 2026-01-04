@@ -71,30 +71,24 @@ def exit_cmd():
 def info_cmd():
     try:
         import psutil, platform
+        import pygetwindow as gw
     except ModuleNotFoundError:
         nomodule_boottraper()
-    sys1 = platform.node()
-    sys2 = platform.platform()
-    sys3 = platform.machine()
-    sys4 = platform.processor()
-    sys5 = psutil.cpu_count()
-    sys6 = psutil.virtual_memory()
-    syspy1 = platform.python_version()
-    syspy2 = platform.python_build()
-    syspy3 = platform.python_compiler()
-    os1 = os.getpid()
+    win = gw.getActiveWindow()
     try:
-        print(f"{Fore.WHITE}Name:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys1}")
-        print(f"{Fore.WHITE}OS:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys2}")
-        print(f"{Fore.WHITE}Machine:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys3}")
-        print(f"{Fore.WHITE}processor:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys4}")
-        print(f"{Fore.WHITE}CPU count:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys5}")
-        print(f"{Fore.WHITE}Memory:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {sys6}")
-        print(f"{Fore.WHITE}Script PID:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {os1}")
+        print(f"{Fore.WHITE}Name:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.node()}")
+        print(f"{Fore.WHITE}OS:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.platform()}")
+        print(f"{Fore.WHITE}Machine:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.machine()}")
+        print(f"{Fore.WHITE}processor:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.processor()}")
+        print(f"{Fore.WHITE}CPU count:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {psutil.cpu_count()}")
+        print(f"{Fore.WHITE}Memory:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {psutil.virtual_memory()}")
+        print(f"{Fore.WHITE}Script PID:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {os.getpid()}")
+        print(f"{Fore.WHITE}Window size:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {win.width}x{win.height}")
+        print(f"{Fore.WHITE}Sctipt dir:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {__file__}\n")
 
-        print(f"{Fore.WHITE}Py Version:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {syspy1}")
-        print(f"{Fore.WHITE}Py Build:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {syspy2}")
-        print(f"{Fore.WHITE}Py Compiler:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {syspy3}")
+        print(f"{Fore.WHITE}Py Version:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.python_version()}")
+        print(f"{Fore.WHITE}Py Build:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.python_build()}")
+        print(f"{Fore.WHITE}Py Compiler:{Fore.LIGHTWHITE_EX}{Style.BRIGHT} {platform.python_compiler()}")
 
 
     except Exception as error_sysinfo:
