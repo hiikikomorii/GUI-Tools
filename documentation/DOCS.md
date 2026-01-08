@@ -101,6 +101,7 @@
 
 5. **``Folder`` - открывает ту папку, где находится ``HidlowToolsGUI.py`` (main)**
 
+6. **``Clear cache`` - очищает ``.pyc`` и ``__pycache__`` во всей папке внутри проекта**
 
 [в начало](#documentation)
 ***
@@ -224,6 +225,7 @@ python HidlowToolsGUI.py
 ```
 
 [в начало](#documentation)
+
 
 
 
