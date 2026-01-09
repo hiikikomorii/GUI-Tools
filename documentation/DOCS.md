@@ -161,7 +161,9 @@
 
 **``HidlowGUI/files/consoledebug/``:**
 
-**Тут лежит ``console`` и модуль ``pingapi_func`` для console**
+**Тут лежит ``console`` и модули ``pingapi_func`` и ``ping_utils`` для console**
+* **``pingapi_func`` - для пинга api утилит**
+* **``ping_utils`` - для пинга остальных функций**
 
 **``HidlowGUI/files/troll``:**
 
@@ -225,6 +227,7 @@ python HidlowToolsGUI.py
 ```
 
 [в начало](#documentation)
+
 
 
 
