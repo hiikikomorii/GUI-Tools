@@ -55,7 +55,7 @@
 имеет в себе следующие языки: ``Russian`` ``English`` ``Spanish`` ``Japanese``**
 
 
-9. ``Ctypes Notif`` - создает оконное уведомление используя ``ctypes``
+9. **``Ctypes Notif`` - создает оконное уведомление используя ``ctypes``
 подробно по ссылке: [Windows-notifications](https://github.com/hiikikomorii/Windows-notifications)**
 
 
@@ -227,6 +227,7 @@ python HidlowToolsGUI.py
 ```
 
 [в начало](#documentation)
+
 
 
 
