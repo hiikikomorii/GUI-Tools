@@ -200,13 +200,6 @@ pip install -r requirements.txt
 
 ```bash
 cd ../hidlowgui
-py boot_loader.py
-```
-
-**или**
-
-```bash
-cd ../hidlowgui
 python boot_loader.py
 ```
 
@@ -216,17 +209,11 @@ python boot_loader.py
 
 ```bash
 cd hidlowgui
-py HidlowToolsGUI.py
-```
-
-**или**
-
-```bash
-cd hidlowgui
 python HidlowToolsGUI.py
 ```
 
 [в начало](#documentation)
+
 
 
 
