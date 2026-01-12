@@ -27,7 +27,8 @@ headers = {
 }
 
 def onlypingarg():
-    print(f"{Fore.LIGHTWHITE_EX}number\nip\nlat/lon\nbtc\nton\n")
+    print(f"{Fore.LIGHTWHITE_EX}api: number | ip | lat/lon | btc | ton")
+    print(f"{Fore.LIGHTWHITE_EX}utils: faker | qrcode | ctypes | monitoring")
 
 def try_ping_ip():
 
@@ -50,10 +51,11 @@ def try_ping_ip():
 
 def try_ping_ll():
     url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat=55.7342&lon=37.6129"
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+    response = requests.get(url, headers={"User-Agent": "TkinterApp"})
     data = response.json()
 
     try:
+
         latt = data.get("lat", "не найдено")
         lonn = data.get("lon", "не найдено")
 

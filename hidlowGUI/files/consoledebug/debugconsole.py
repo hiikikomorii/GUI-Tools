@@ -45,9 +45,7 @@ fg cyan - меняет цвет консоли на голубой
 fg red - меняет цвет консоли на красный
 fg white - меняет цвет консоли на белый
     
-    {Fore.LIGHTBLUE_EX}-/> ping utils 
-    
-    </-{Fore.RESET}{Fore.LIGHTWHITE_EX}
+    {Fore.LIGHTBLUE_EX}-/> ping utils </-{Fore.RESET}{Fore.LIGHTWHITE_EX}
 ping number - проверяет Number API на работоспособность
 ping ip - проверяет IP API на работоспособность
 ping latlon - проверяет  Lat/Lon API на работоспособность
@@ -172,8 +170,11 @@ def prepare_ll():
 
 def prepare_btc():
     from pingapi_func import try_ping_btc
+    try_ping_btc()
+
 def prepare_ton():
     from pingapi_func import try_ping_ton
+    try_ping_ton()
 
 def prepare_onlypingarg():
     from pingapi_func import onlypingarg
