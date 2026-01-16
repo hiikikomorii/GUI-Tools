@@ -22,7 +22,7 @@ try:
 
 
 except ModuleNotFoundError as e:
-    nomodule_boottraper()
+    print(e)
 
 root = ctk.CTk()
 init(autoreset=True)
@@ -164,6 +164,7 @@ def trol():
                 cwd=str(script_dir),
                 creationflags=subprocess.CREATE_NEW_CONSOLE
             )
+
         else:
             ctypes.windll.user32.MessageBoxW(0, f"Ошибка открытия TrollGUI\nПроверьте совместимость сборки", "HidlowToolsGUI", 0x10)
     except Exception as error_troll_cmd:
