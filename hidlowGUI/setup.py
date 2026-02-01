@@ -24,7 +24,7 @@ f.close()
 time.sleep(0.5)
 
 try:
-    subprocess.run(["pip", "install", "-r", "requirements.txt"])
+    subprocess.run(["pip", "install", "-r", "requirements.txt"], cwd="assets")
 except Exception as e:
     print(f"ERROR\n" * 5 + e)
     input('enter: ')
