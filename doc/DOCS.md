@@ -175,15 +175,11 @@
 
 ## Установка
 
-**Для начала скачиваем этот репозиторий ``HidlowToolsGui-main``. Извлекаем эту папку, затем открываем ``cmd`` (``win+r`` → ``cmd``)**
+**Для начала скачиваем этот репозиторий ``HidlowToolsGui-main``**
 
-**Затем, устанавливаем ``зависимости`` (pip):**
-```bash
-cd C:\Users\User\Downloads\hidlowToolsGUI-main\documentation
-pip install -r requirements.txt
-```
-**важно вписать путь прямо во внуть папки ``documentation``.**  
-**``pip install -r requirements.txt`` нужен для того, чтобы установить все нужные модули за один раз. Полный список:**
+**Ищем установщик по этому пути: ``hidlowGUI/setup.py``, затем запускаем его. Установщик за вас установит все ``зависимости (requirements.txt)`` и запустит скрипт.**
+
+**Полный список зависимостей:**
 * **``pip install customtkinter``**
 * **``pip install requests``**
 * **``pip install Pillow``**
@@ -196,23 +192,14 @@ pip install -r requirements.txt
 * **``pip install Flask``**
 * **``pip install pygetwindow``**
 
-Теперь перемещаемся в папку ``HidlowGUI`` и желательно сначала запустить ``bootstrapper`` для проверки на целостность всех модулей:**
+**Если же у вас установлены все зависимости, то можно запустить ``main.py`` напрямую:**
 
-```bash
-cd ../hidlowgui
-python boot_loader.py
 ```
-
-**bootstrapper займет на проверку всего пару секунд, затем, если не обнаружит ошибок в модулях, то запустит HidlowToolsGUI и сам закроется.**
-
-**Запуск HidlowToolsGUI напрямую:**
-
-```bash
-cd hidlowgui
-python HidlowToolsGUI.py
+python main.py
 ```
 
 [в начало](#documentation)
+
 
 
 
