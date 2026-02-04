@@ -26,6 +26,7 @@ class Pip:
                 self.label_ru.pack(anchor="nw", pady=5)
                 self.label_eng.config(text=f"pip {self.main.missing_module_name} it was established", fg="#00CF00")
                 self.label_eng.pack(anchor="nw", pady=5)
+                self.main.download_pip = True
 
             if result.returncode != 0:
                 error_msg = result.stderr
@@ -46,6 +47,8 @@ class Pip:
                 out_msg = result.stdout
                 self.label_pipudp.config(text=f"pip successfully updated\n{out_msg}", fg="#00CF00")
                 self.label_pipudp.pack(anchor="sw", pady=5, padx=20)
+                self.main.update_pip = True
+
             if result.returncode != 0:
                 error_msg = result.stderr
                 self.label_pipudp.config(text=f"pip upd error: {error_msg}", fg="red")
@@ -62,6 +65,8 @@ class Main:
         self.missing_module_name = "none"
         self.bg_state = 1
         self.fullscreen = False
+        self.download_pip = False
+        self.update_pip = False
         self.reboot_path = os.path.abspath(__file__)
 
         self.text = ("""
@@ -214,6 +219,11 @@ class Main:
                             bg="white",
                             fg="black"
                         )
+                        if self.download_pip:
+                            self.label_ru.config(fg="#00CF00")
+                            self.label_eng.config(fg="#00CF00")
+                        if self.update_pip:
+                            self.label_pipudp.config(fg="#00CF00")
 
             self.bg_state = 3
         else:
@@ -234,6 +244,12 @@ class Main:
                             bg="blue",
                             fg="white"
                         )
+                        if self.download_pip:
+                            self.label_ru.config(fg="#00CF00")
+                            self.label_eng.config(fg="#00CF00")
+                        if self.update_pip:
+                            self.label_pipudp.config(fg="#00CF00")
+
             self.bg_state = 1
 
 
