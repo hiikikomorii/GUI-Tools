@@ -12,8 +12,9 @@ try:
     from colorama import init, Fore, Style
 
 except ModuleNotFoundError as e:
-    boot_path = "files/bootstrapper.py"
-    subprocess.Popen(["cmd", "/c" , sys.executable, str(boot_path)],creationflags=subprocess.CREATE_NEW_CONSOLE)
+    subprocess.Popen(["cmd", "/c" , sys.executable, "bootstrapper.py"],
+    creationflags=subprocess.CREATE_NEW_CONSOLE,
+    cwd="files/bootstrapper/")
     sys.exit()
 
 init(autoreset=True)

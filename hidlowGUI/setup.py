@@ -37,7 +37,7 @@ try:
     boot_path = "bootstrapper.py"
     subprocess.Popen(
         ["cmd", "/c", sys.executable, str(boot_path)],
-        cwd="files/",
+        cwd="files/bootstrapper",
         creationflags=subprocess.CREATE_NEW_CONSOLE
     )
     sys.exit()

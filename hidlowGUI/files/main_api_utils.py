@@ -6,7 +6,7 @@ try:
 except ModuleNotFoundError:
     import subprocess
     import sys
-    boot_path = "bootstrapper.py"
+    boot_path = "bootstrapper/bootstrapper.py"
     subprocess.Popen(
         ["cmd", "/c", sys.executable, str(boot_path)],
         creationflags=subprocess.CREATE_NEW_CONSOLE

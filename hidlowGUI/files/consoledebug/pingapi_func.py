@@ -1,9 +1,18 @@
-from colorama import init, Fore, Style
-import requests
 import sys
 import random
 import re
 import time
+
+try:
+    from colorama import init, Fore, Style
+    import requests
+except ModuleNotFoundError:
+    boot_path = "../bootstrapper/bootstrapper.py"
+    subprocess.Popen(
+        ["cmd", "/c", sys.executable, str(boot_path)],
+        creationflags=subprocess.CREATE_NEW_CONSOLE
+    )
+    sys.exit()
 
 init(autoreset=True)
 
