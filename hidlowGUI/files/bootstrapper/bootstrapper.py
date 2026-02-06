@@ -162,7 +162,6 @@ class Main:
 
     def check_pip(self):
         try:
-            import asdasdasd
             import customtkinter
             import colorama
             import requests
@@ -308,4 +307,5 @@ if __name__ == '__main__':
     root = tk.Tk()
     app = Main(root)
     root.mainloop()
+
 
