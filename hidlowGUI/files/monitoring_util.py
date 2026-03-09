@@ -61,29 +61,3 @@ class Util:
 
             except RuntimeError:
                 return
-
-class Example_main:
-    import threading as thr
-
-    def __init__(self, master):
-        self.root = master
-        self._widgets()
-        self.mon_start = Util(self.label_mon, self.label_mem, self.label_cpu, self.label_info_monitor)
-        self.thr.Thread(target=lambda: self.mon_start.monitoring_start(
-            self.label_mon, self.label_mem, self.label_cpu, self.label_info_monitor),daemon=True).start()
-
-
-    def _widgets(self):
-        self.monitor_frame = ctk.CTkFrame(self.root, fg_color="#242424")
-        self.monitor_frame.pack(pady=20, anchor="n")
-        self.monitor_frame_stat = ctk.CTkFrame(self.root, fg_color="#242424")
-        self.monitor_frame_stat.pack(pady=10, anchor="sw", side="left")
-        self.label_mon = ctk.CTkLabel(self.monitor_frame, font=("Arial", 30))
-        self.label_mem = ctk.CTkLabel(self.monitor_frame, font=("Arial", 30))
-        self.label_cpu = ctk.CTkLabel(self.monitor_frame, font=("Arial", 30))
-        self.label_info_monitor = ctk.CTkLabel(self.monitor_frame_stat, font=("Arial", 20))
-
-if __name__ == '__main__':
-    root = ctk.CTk()
-    app = Example_main(root)
-    root.mainloop()
