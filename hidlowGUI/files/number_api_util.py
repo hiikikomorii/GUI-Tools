@@ -1,7 +1,6 @@
 try:
     import re
     import phonenumbers
-    import urllib.request
     import random
     import time
     import requests
@@ -158,3 +157,4 @@ class Api:
             self.label_wd.configure(text=f"Ошибка API: {er}", text_color="red")
             self.label_wd.pack()
             print(f"{Fore.BLUE}{Style.BRIGHT}[API] {Fore.LIGHTRED_EX}Ошибка API: {er}")
+
