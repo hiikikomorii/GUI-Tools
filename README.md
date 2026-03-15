@@ -1,6 +1,6 @@
 # Hidlow Tools GUI
 
-**[Documentation](doc/DOCS.md)**
+**[Documentation](DOCS.md)**
 ***
 ![mainscreen.jpg](assets/mainscreen.jpg)
 
